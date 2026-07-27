@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA
+    </title>
+
+    <!-- Font Awesome untuk Ikon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS Eksternal -->
+    <link rel="stylesheet" href="../../css/individu/Catatan.css" />
+  </head>
+  <body>
+    <!-- NAVBAR TOP -->
+    <nav class="navbar">
+      <a href="../../landing.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Beranda
+      </a>
+      <div class="nav-logo">
+        <img src="../../images/logo-bps.webp" alt="Logo BPS" />
+        <div class="logo-text">
+          Badan Pusat Statistik<br />
+          <span>Kota Surabaya</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTAINER UTAMA -->
+    <div class="survei-container">
+      <!-- SIDEBAR PROGRESS -->
+      <aside class="sidebar">
+        <div class="progress-header">
+          <span>Progress Pengisian</span>
+          <span class="progress-percent">75%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 75%"></div>
+        </div>
+
+        <div class="step-list">
+          <!-- Step 1: Selesai -->
+          <a href="IdentitasKeluarga.html" class="step-item completed">
+            <div class="step-left">
+              <div class="step-icon-done">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Identitas Keluarga</span>
+            </div>
+          </a>
+
+          <!-- Step 2: Selesai -->
+          <a
+            href="KeteranganPerumahan.html"
+            class="step-item completed"
+          >
+            <div class="step-left">
+              <div class="step-icon-done">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Keterangan Perumahan</span>
+            </div>
+          </a>
+
+          <!-- Step 3: Selesai -->
+          <a href="Dokumentasi.html" class="step-item completed">
+            <div class="step-left">
+              <div class="step-icon-done">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Dokumentasi</span>
+            </div>
+          </a>
+
+          <!-- Step 4: Aktif (Catatan) -->
+          <a href="#" class="step-item active">
+            <div class="step-left">
+              <div class="step-number">4</div>
+              <span>Catatan</span>
+            </div>
+          </a>
+        </div>
+      </aside>
+
+      <!-- KONTEN UTAMA -->
+      <main class="main">
+        <div class="main-card">
+          <div class="step-tag">BLOK IV • Step 4 dari 4</div>
+          <h1 class="form-title">IV. Catatan</h1>
+          <p class="form-subtitle">
+            Ground Check Pendataan Desa Cinta Statistik (CANTIK) Kota Surabaya
+          </p>
+
+          <!-- ALERT INFO -->
+          <div class="alert-info-box">
+            <strong>Petunjuk Pengisian:</strong> Isikan catatan tambahan jika
+            terdapat kondisi khusus, kendala saat pendataan di lapangan, atau
+            penjelasan lebih detail mengenai data responden/keluarga ini.
+          </div>
+
+          <!-- FORM INPUT CATATAN (TEXTAREA) -->
+          <div class="form-group">
+            <label for="inputCatatan" class="form-label">
+              Catatan <span class="text-optional">(Opsional)</span>
+            </label>
+
+            <div class="textarea-wrapper">
+              <textarea
+                id="inputCatatan"
+                class="form-textarea"
+                rows="8"
+                maxlength="1000"
+                placeholder="Tuliskan catatan lapangan, keterangan khusus responden, atau kendala saat melakukan pendataan di sini..."
+              ></textarea>
+            </div>
+
+            <div class="form-field-footer">
+              <span class="form-hint"
+                ><i class="fa-regular fa-circle-question"></i> Maksimal 1000
+                karakter.</span
+              >
+              <span class="char-counter" id="charCounter">0 / 1000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOMBOL AKSI BAWAH -->
+        <div class="action-buttons">
+          <!-- 1. Tombol Sebelumnya -->
+          <button
+            type="button"
+            class="btn-action btn-prev"
+            onclick="handlePrev()"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Sebelumnya</span>
+          </button>
+
+          <!-- 2. Tombol Simpan Draft -->
+          <button
+            type="button"
+            class="btn-action btn-draft"
+            onclick="handleSaveDraft()"
+          >
+            <i class="fa-regular fa-floppy-disk"></i>
+            <span>Simpan Draft</span>
+          </button>
+
+          <!-- 3. Tombol Selesai / Submit Data -->
+          <button
+            type="button"
+            class="btn-action btn-submit"
+            onclick="handleSubmit()"
+          >
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Selesai & Kirim</span>
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- JAVASCRIPT UNTUK CHAR COUNTER & NAVIGASI -->
+    <script>
+      const inputCatatan = document.getElementById("inputCatatan");
+      const charCounter = document.getElementById("charCounter");
+
+      // Feature: Live Character Counter
+      inputCatatan.addEventListener("input", () => {
+        const currentLength = inputCatatan.value.length;
+        charCounter.textContent = `${currentLength} / 1000`;
+
+        if (currentLength >= 900) {
+          charCounter.classList.add("warning");
+        } else {
+          charCounter.classList.remove("warning");
+        }
+      });
+
+      // Navigasi
+      function handlePrev() {
+        window.history.back();
+      }
+
+      function handleSaveDraft() {
+        alert("Draft catatan berhasil disimpan!");
+      }
+
+      function handleSubmit() {
+        alert("Seluruh data survei berhasil dikirim!");
+        // Arahkan ke halaman sukses/beranda
+        window.location.href = "../../landing.html";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA
+    </title>
+
+    <!-- Font Awesome untuk Ikon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS Eksternal Mandiri -->
+    <link rel="stylesheet" href="../../css/rumah-tangga/Perumahan.css" />
+  </head>
+  <body>
+    <!-- NAVBAR TOP -->
+    <nav class="navbar">
+      <a href="#" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Beranda
+      </a>
+      <div class="nav-logo">
+        <img src="../../images/logo-bps.webp" alt="Logo BPS" />
+        <div class="logo-text">
+          Badan Pusat Statistik<br />
+          <span>Kota Surabaya</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTAINER UTAMA -->
+    <div class="survei-container">
+      <!-- SIDEBAR PROGRESS -->
+      <aside class="sidebar">
+        <div class="progress-header">
+          <span>Progress Pengisian</span>
+          <span class="progress-percent">25%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 25%"></div>
+        </div>
+
+        <div class="step-list">
+          <!-- Step 1: Selesai -->
+          <a href="IdentitasKeluarga.html" class="step-item completed">
+            <div class="step-left">
+              <div class="step-icon-done">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Identitas Keluarga</span>
+            </div>
+          </a>
+
+          <!-- Step 2: Aktif (Keterangan Perumahan) -->
+          <a href="#" class="step-item active">
+            <div class="step-left">
+              <div class="step-number">2</div>
+              <span>Keterangan Perumahan</span>
+            </div>
+          </a>
+
+          <!-- Step 3: Menunggu -->
+          <a href="Dokumentasi.html" class="step-item">
+            <div class="step-left">
+              <div class="step-number">4</div>
+              <span>Dokumentasi</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon-wait"></i>
+          </a>
+
+          <!-- Step 4: Menunggu -->
+          <a href="Catatan.html" class="step-item">
+            <div class="step-left">
+              <div class="step-number">5</div>
+              <span>Catatan</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon-wait"></i>
+          </a>
+        </div>
+      </aside>
+
+      <!-- KONTEN UTAMA -->
+      <main class="main">
+        <div class="main-card">
+          <div class="step-tag">BLOK II • Step 2 dari 5</div>
+          <h1 class="form-title">Keterangan Perumahan</h1>
+          <p class="form-subtitle">
+            Ground Check Pendataan Desa Cinta Statistik (CANTIK) Kota Surabaya
+          </p>
+
+          <!-- ALERT INFO -->
+          <div class="alert-info-box">
+            <strong>Petunjuk Pengisian:</strong> Lakukan pendataan kondisi fisik
+            bangunan, fasilitas sanitasi, dan sumber air tempat tinggal
+            responden secara cermat.
+          </div>
+
+          <!-- FORM GRID -->
+          <form id="formPerumahan">
+            <div class="form-grid">
+              <!-- 201 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >201. Status kepemilikan bangunan tempat tinggal yang
+                  ditempati <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q201">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="1">1. Milik Sendiri</option>
+                  <option value="2">2. Kontrak/sewa</option>
+                  <option value="3">3. Bebas sewa</option>
+                  <option value="4">4. Dinas</option>
+                  <option value="5">5. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 202 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >202. Status kepemilikan lahan bangunan tempat tinggal yang
+                  ditempati <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q202">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="1">1. Milik Sendiri</option>
+                  <option value="2">2. Kontrak/sewa</option>
+                  <option value="3">3. Bebas sewa</option>
+                  <option value="4">4. Dinas</option>
+                  <option value="5">5. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 203 -->
+              <div class="form-field full-width">
+                <label class="form-label"
+                  >203. Luas lantai bangunan tempat tinggal
+                  <span class="text-danger">*</span></label
+                >
+                <div class="input-addon-group">
+                  <input
+                    type="number"
+                    class="form-input"
+                    id="q203"
+                    placeholder="Masukkan luas lantai"
+                    min="1"
+                  />
+                  <span class="input-addon">m²</span>
+                </div>
+              </div>
+
+              <!-- 204 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >204. Jenis lantai terluas
+                  <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q204">
+                  <option value="" disabled selected>Pilih jenis lantai</option>
+                  <option value="1">1. Marmer/granit</option>
+                  <option value="2">2. Keramik</option>
+                  <option value="3">3. Parket/vinil/karpet</option>
+                  <option value="4">4. Ubin/tegel/traso</option>
+                  <option value="5">5. Kayu/papan</option>
+                  <option value="6">6. Semen/bata merah</option>
+                  <option value="7">7. Bambu</option>
+                  <option value="8">8. Tanah</option>
+                  <option value="9">9. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 205 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >205. Jenis dinding terluas
+                  <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q205">
+                  <option value="" disabled selected>
+                    Pilih jenis dinding
+                  </option>
+                  <option value="1">1. Tembok</option>
+                  <option value="2">2. Plesteran anyaman bambu/kawat</option>
+                  <option value="3">3. Kayu/papan/gypsum/GRC/calciboard</option>
+                  <option value="4">4. Anyaman bambu</option>
+                  <option value="5">5. Batang kayu</option>
+                  <option value="6">6. Bambu</option>
+                  <option value="7">7. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 206 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >206. Jenis atap terluas
+                  <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q206">
+                  <option value="" disabled selected>Pilih jenis atap</option>
+                  <option value="1">1. Beton</option>
+                  <option value="2">2. Genteng</option>
+                  <option value="3">3. Seng</option>
+                  <option value="4">4. Asbes</option>
+                  <option value="5">5. Bambu</option>
+                  <option value="6">6. Kayu/sirap</option>
+                  <option value="7">7. Jerami/ijuk</option>
+                  <option value="8">8. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 207 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >207. Sumber air minum utama
+                  <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q207">
+                  <option value="" disabled selected>
+                    Pilih sumber air minum
+                  </option>
+                  <option value="1">1. Air kemasan bermerek</option>
+                  <option value="2">2. Air isi ulang</option>
+                  <option value="3">3. Leding</option>
+                  <option value="4">4. Sumur bor/pompa</option>
+                  <option value="5">5. Sumur terlindung</option>
+                  <option value="6">6. Sumur tak terlindung</option>
+                  <option value="7">7. Mata air terlindung</option>
+                  <option value="8">8. Mata air tak terlindung</option>
+                  <option value="9">9. Air permukaan</option>
+                  <option value="10">10. Air hujan</option>
+                  <option value="11">11. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 208 -->
+              <div class="form-field full-width">
+                <label class="form-label"
+                  >208. Kepemilikan dan penggunaan fasilitas tempat buang air
+                  besar <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q208">
+                  <option value="" disabled selected>
+                    Pilih fasilitas buang air besar
+                  </option>
+                  <option value="1">
+                    1. Ada, digunakan hanya anggota keluarga sendiri
+                  </option>
+                  <option value="2">
+                    2. Ada, digunakan bersama anggota keluarga dari keluarga
+                    tertentu
+                  </option>
+                  <option value="3">3. Ada, di MCK Komunal</option>
+                  <option value="4">
+                    4. Ada, di MCK umum/siapapun menggunakan
+                  </option>
+                  <option value="5">
+                    5. Ada, Anggota keluarga tidak menggunakan
+                  </option>
+                  <option value="6">6. Tidak ada fasilitas</option>
+                </select>
+              </div>
+
+              <!-- 209 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >209. Jika 208 berkode 1, 2, atau 3, jenis kloset yang
+                  digunakan</label
+                >
+                <select class="form-select" id="q209">
+                  <option value="" disabled selected>Pilih jenis kloset</option>
+                  <option value="1">1. Leher angsa</option>
+                  <option value="2">2. Plengsengan dengan tutup</option>
+                  <option value="3">3. Plengsengan tanpa tutup</option>
+                  <option value="4">4. Cemplung/cubluk</option>
+                </select>
+              </div>
+
+              <!-- 210 -->
+              <div class="form-field">
+                <label class="form-label"
+                  >210. Tempat pembuangan akhir tinja
+                  <span class="text-danger">*</span></label
+                >
+                <select class="form-select" id="q210">
+                  <option value="" disabled selected>
+                    Pilih pembuangan tinja
+                  </option>
+                  <option value="1">1. Tangki septik</option>
+                  <option value="2">2. IPAL</option>
+                  <option value="3">3. Kolam/sawah/sungai</option>
+                  <option value="4">4. Lubang tanah</option>
+                  <option value="5">5. Pantai/tanah lapang/kebun</option>
+                  <option value="6">6. Lainnya</option>
+                </select>
+              </div>
+
+              <!-- 211 SECTION: ANGGOTA KELUARGA BEKERJA -->
+              <div class="sub-section-card full-width">
+                <h3 class="sub-section-title">
+                  211. Anggota Keluarga yang Bekerja di Rumah Ini
+                </h3>
+
+                <!-- ART 1 -->
+                <div class="art-block">
+                  <div class="art-block-header">ART Pertama yang Bekerja</div>
+                  <div class="art-grid">
+                    <div class="form-field">
+                      <label class="form-label-sub">Nama ART Pertama</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        id="art1_nama"
+                        placeholder="Nama ART Pertama"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label-sub">Deskripsi Pekerjaan</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        id="art1_deskripsi"
+                        placeholder="Misal: Penjahit Konveksi"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label-sub"
+                        >Penghasilan Perbulan (Rp)</label
+                      >
+                      <input
+                        type="number"
+                        class="form-input"
+                        id="art1_penghasilan"
+                        placeholder="Contoh: 2500000"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ART 2 -->
+                <div class="art-block">
+                  <div class="art-block-header">
+                    ART Kedua yang Bekerja (Opsional)
+                  </div>
+                  <div class="art-grid">
+                    <div class="form-field">
+                      <label class="form-label-sub">Nama ART Kedua</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        id="art2_nama"
+                        placeholder="Nama ART Kedua"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label-sub">Deskripsi Pekerjaan</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        id="art2_deskripsi"
+                        placeholder="Deskripsi pekerjaan"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label-sub"
+                        >Penghasilan Perbulan (Rp)</label
+                      >
+                      <input
+                        type="number"
+                        class="form-input"
+                        id="art2_penghasilan"
+                        placeholder="Penghasilan perbulan"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ART 3 -->
+                <div class="art-block">
+                  <div class="art-block-header">
+                    ART Ketiga yang Bekerja (Opsional)
+                  </div>
+                  <div class="art-grid">
+                    <div class="form-field">
+                      <label class="form-label-sub">Nama ART Ketiga</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        id="art3_nama"
+                        placeholder="Nama ART Ketiga"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label-sub">Deskripsi Pekerjaan</label>
+                      <input
+                        type="text"
+                        class="form-input"
+                        id="art3_deskripsi"
+                        placeholder="Deskripsi pekerjaan"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label-sub"
+                        >Penghasilan Perbulan (Rp)</label
+                      >
+                      <input
+                        type="number"
+                        class="form-input"
+                        id="art3_penghasilan"
+                        placeholder="Penghasilan perbulan"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- TOMBOL AKSI BAWAH -->
+        <div class="action-buttons">
+          <!-- 1. Tombol Sebelumnya -->
+          <button
+            type="button"
+            class="btn-action btn-prev"
+            onclick="handlePrev()"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Sebelumnya</span>
+          </button>
+
+          <!-- 2. Tombol Simpan Draft -->
+          <button
+            type="button"
+            class="btn-action btn-draft"
+            onclick="handleSaveDraft()"
+          >
+            <i class="fa-regular fa-floppy-disk"></i>
+            <span>Simpan Draft</span>
+          </button>
+
+          <!-- 3. Tombol Selanjutnya -->
+          <button
+            type="button"
+            class="btn-action btn-next"
+            onclick="handleNext()"
+          >
+            <span>Selanjutnya</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- JAVASCRIPT NAVIGASI -->
+    <script>
+      function handlePrev() {
+        window.history.back();
+      }
+
+      function handleSaveDraft() {
+        alert("Draft Keterangan Perumahan berhasil disimpan!");
+      }
+
+      function handleNext() {
+        window.location.href="Dokumentasi.html";
+      }
+    </script>
+  </body>
+</html>

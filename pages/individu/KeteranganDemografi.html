@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA
+    </title>
+
+    <!-- CSS Eksternal -->
+    <link rel="stylesheet" href="../../css/individu/Demografi.css" />
+
+    <!-- FontAwesome Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Top Navbar -->
+    <header class="navbar">
+      <a href="../../landing.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Beranda
+      </a>
+      <div class="nav-logo">
+        <img src="../../images/logo-bps.webp" alt="Logo BPS" />
+        <div class="logo-text">Badan Pusat Statistik<br />Kota Surabaya</div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="survei-container">
+      <!-- Left Sidebar / Progress -->
+      <aside class="sidebar">
+        <div class="progress-header">
+          <span>Progress Pengisian</span>
+          <span class="progress-percent">25%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 25%"></div>
+        </div>
+
+        <nav class="step-list">
+          <a href="IdentitasKeluarga.html" class="step-item completed">
+            <div class="step-left">
+              <span class="step-icon-done"
+                ><i class="fa-solid fa-check"></i
+              ></span>
+              <span>Identitas Keluarga</span>
+            </div>
+          </a>
+
+          <a href="#" class="step-item active">
+            <div class="step-left">
+              <span class="step-number">2</span>
+              <span>Keterangan Demografi</span>
+            </div>
+          </a>
+
+          <a href="Dokumentasi.html" class="step-item">
+            <div class="step-left">
+              <span class="step-number">3</span>
+              <span>Dokumentasi</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon-wait"></i>
+          </a>
+
+          <a href="Catatan.html" class="step-item">
+            <div class="step-left">
+              <span class="step-number">4</span>
+              <span>Catatan</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon-wait"></i>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Right Main Content -->
+      <main class="main">
+        <div class="main-card">
+          <div class="step-tag">BLOK II &bull; Step 2 dari 4</div>
+          <h1 class="form-title">II. Keterangan Demografi</h1>
+          <p class="form-subtitle">
+            Ground Check Pendataan Desa Cinta Statistik (CANTIK) Kota Surabaya
+          </p>
+
+          <!-- Info Alert (Muncul pada State Kosong & State Daftar List) -->
+          <div id="infoAlert" class="alert-info-box">
+            <strong>Blok II</strong> ditanyakan untuk setiap anggota keluarga.
+            Tambahkan satu per satu, lalu lengkapi seluruh rinciannya sebelum
+            menambah anggota berikutnya.
+          </div>
+
+          <!-- ==========================================
+                     STATE 1: KOSONG (Gambar 1)
+                     ========================================== -->
+          <div id="stateEmpty" class="empty-state">
+            <div class="empty-icon">
+              <i class="fa-regular fa-user"></i>
+            </div>
+            <p class="empty-text">
+              Belum ada anggota keluarga yang ditambahkan
+            </p>
+            <button
+              type="button"
+              class="btn-primary-blue"
+              onclick="openMemberForm()"
+            >
+              <i class="fa-solid fa-plus"></i> Tambah Anggota Keluarga
+            </button>
+          </div>
+
+          <!-- ==========================================
+                     STATE 2: FORM PENGISIAN (Gambar 2)
+                     ========================================== -->
+          <div id="stateForm" class="form-state" style="display: none">
+            <button type="button" class="btn-back-link" onclick="backToList()">
+              <i class="fa-solid fa-chevron-left"></i> Kembali ke daftar anggota
+            </button>
+
+            <div class="member-form-header">
+              <div class="member-badge" id="formBadgeNumber">1</div>
+              <div>
+                <h3 class="member-form-title" id="formMemberTitle">
+                  Anggota ke-1
+                </h3>
+              </div>
+            </div>
+
+            <form id="memberForm">
+              <input type="hidden" id="editingMemberId" value="" />
+
+              <!-- SECTION IDENTITAS -->
+              <div class="section-green-title">IDENTITAS ANGGOTA</div>
+
+              <div class="form-field">
+                <label
+                  >201. Nama Anggota Keluarga
+                  <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  placeholder="Tuliskan nama lengkap sesuai KK"
+                />
+              </div>
+
+              <div class="grid-2">
+                <div class="form-field">
+                  <label
+                    >202. NIK Kepala Keluarga
+                    <span class="text-danger">*</span></label
+                  >
+                  <input type="text" maxlength="16" />
+                  <div class="form-hint">16 digit angka</div>
+                </div>
+                <div class="form-field">
+                  <label
+                    >203. Jenis Kelamin
+                    <span class="text-danger">*</span></label
+                  >
+                  <select id="inputJenisKelamin" class="form-select">
+                    <option value="" disabled selected>Pilih salah satu</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-field">
+                  <label
+                    >204. Tanggal Lahir
+                    <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="date"
+                    id="inputTanggalLahir"
+                    class="form-date-input"
+                  />
+                  <div class="form-hint">Format: MM/DD/YYYY</div>
+                </div>
+                <div class="form-field">
+                  <label>205. Umur <span class="text-danger">*</span></label>
+                  <input type="text" maxlength="3" />
+                  <div class="form-hint">Isi dengan angka</div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label
+                  >206. Hubungan dengan Kepala Keluarga
+                  <span class="text-danger">*</span></label
+                >
+                <select id="inputHubungan" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Kepala Keluarga">Kepala Keluarga</option>
+                  <option value="Istri/Suami">Istri/Suami</option>
+                  <option value="Anak">Anak</option>
+                  <option value="Menantu">Menantu</option>
+                  <option value="Cucu">Cucu</option>
+                  <option value="Orang Tua/Mertua">Orang Tua/Mertua</option>
+                  <option value="Orang Tua/Mertua">Pembantu/sopir</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+
+              <!-- SECTION PENDIDIKAN -->
+              <div class="section-green-title">PENDIDIKAN</div>
+
+              <div class="form-field">
+                <label
+                  >207. Patisipasi Sekolah
+                  <span class="text-danger">*</span></label
+                >
+                <select id="inputPartisipasiSekolah" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Tidak/Belum Pernah Bersekolah">
+                    Tidak/Belum Pernah Bersekolah
+                  </option>
+                  <option value="Masih Sekolah">Masih Sekolah</option>
+                  <option value="Tidak Bersekolah Lagi">
+                    Tidak Bersekolah Lagi
+                  </option>
+                </select>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-field">
+                  <label
+                    >208. Pendidikan Tertinggi yang Pernah/Sedang Diduduki
+                    <span class="text-danger">*</span></label
+                  >
+                  <select id="inputPendidikanTertinggi" class="form-select">
+                    <option value="" disabled selected>Pilih salah satu</option>
+                    <option value="Tidak/Belum Pernah Bersekolah">
+                      Tidak/Belum Pernah Bersekolah
+                    </option>
+                    <option value="Paket A">Paket A</option>
+                    <option value="SDLB">SDLB</option>
+                    <option value="SD">SD</option>
+                    <option value="MI">MI</option>
+                    <option value="SPM/PDF Ula">SPM/PDF Ula</option>
+                    <option value="Paket B">Paket B</option>
+                    <option value="SMP LB">SMP LB</option>
+                    <option value="SMP">SMP</option>
+                    <option value="MTs">MTs</option>
+                    <option value="SPM/PDF Wustha">SPM/PDF Wustha</option>
+                    <option value="Paket C">Paket C</option>
+                    <option value="SMA">SMA</option>
+                    <option value="MA">MA</option>
+                    <option value="SMK">SMK</option>
+                    <option value="SMLB">SMLB</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label
+                    >209. Kelas Tertinggi yang Pernah/Sedang Diduduki
+                    <span class="text-danger">*</span></label
+                  >
+                  <select id="inputKelasTertinggi" class="form-select">
+                    <option value="" disabled selected>Pilih salah satu</option>
+                    <option value="Tidak/Belum Pernah Bersekolah">
+                      Tidak/Belum Pernah Bersekolah
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label
+                  >209. Ijzah/STTB Tertinggi yang Dimiliki
+                  <span class="text-danger">*</span></label
+                >
+                <select id="inputIjzahSTTB" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Tidak/Belum Pernah Bersekolah">
+                    Tidak/Belum Pernah Bersekolah
+                  </option>
+                  <option value="Paket A">Paket A</option>
+                  <option value="SDLB">SDLB</option>
+                  <option value="SD">SD</option>
+                  <option value="MI">MI</option>
+                  <option value="SPM/PDF Ula">SPM/PDF Ula</option>
+                  <option value="Paket B">Paket B</option>
+                  <option value="SMP LB">SMP LB</option>
+                  <option value="SMP">SMP</option>
+                  <option value="MTs">MTs</option>
+                  <option value="SPM/PDF Wustha">SPM/PDF Wustha</option>
+                  <option value="Paket C">Paket C</option>
+                  <option value="SMA">SMA</option>
+                  <option value="MA">MA</option>
+                  <option value="SMK">SMK</option>
+                  <option value="SMLB">SMLB</option>
+                </select>
+              </div>
+
+              <!-- SECTION PEKERJAAN -->
+              <div class="section-green-title">PEKERJAAN</div>
+
+              <div class="form-field">
+                <label
+                  >210. Apakah yang Bersangkutan Biasanya Bekerja/Membantu
+                  Bekerja? <span class="text-danger">*</span></label
+                >
+                <select id="inputPekerjaan" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Ya">Ya</option>
+                  <option value="Tidak">Tidak</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label
+                  >211. Lapangan Usaha atau Bidang Pekerjaan Utama dari Tempat
+                  Bekerja <span class="text-danger">*</span></label
+                >
+                <select id="inputLapanganUsaha" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Pertanian tanaman padi & palawija">
+                    Pertanian tanaman padi & palawija
+                  </option>
+                  <option value="Hortikultura">Hortikultura</option>
+                  <option value="Perkebunan">Perkebunan</option>
+                  <option value="Perikanan">Perikanan</option>
+                  <option value="Peternakan">Peternakan</option>
+                  <option value="Kehutanan & pertanian lainnya">
+                    Kehutanan & pertanian lainnya
+                  </option>
+                  <option value="Pertambangan/penggalian">
+                    Pertambangan/penggalian
+                  </option>
+                  <option value="Industri pengolahan">
+                    Industri pengolahan
+                  </option>
+                  <option value="Pengadaan listrik, gas, uap/air">
+                    Pengadaan listrik, gas, uap/air
+                  </option>
+                  <option
+                    value="Pengelolaan air, pengelolaan air limbah, pengelolaan dan daur ulang sampah, dan aktivitas remediasi"
+                  >
+                    Pengelolaan air, pengelolaan air limbah, pengelolaan dan
+                    daur ulang sampah, dan aktivitas remediasi
+                  </option>
+                  <option value="Konstruksi">Konstruksi</option>
+                  <option
+                    value="Perdagangan besar dan eceran reparasi dan perawatan mobil dan motor"
+                  >
+                    Perdagangan besar dan eceran reparasi dan perawatan mobil
+                    dan motor
+                  </option>
+                  <option value="Pengangkutan dan pergudangan">
+                    Pengangkutan dan pergudangan
+                  </option>
+                  <option value="Penyediaan akomodasi & makan minum">
+                    Penyediaan akomodasi & makan minum
+                  </option>
+                  <option value="Keuangan & asuransi">
+                    Keuangan & asuransi
+                  </option>
+                  <option value="Real estate">Real estate</option>
+                  <option
+                    value="Aktivitas penyewaan dan sewa guna, tanpa hak opsi, ketenagakerjaan, agen perjalanan, dan penunjang usaha lainnya"
+                  >
+                    Aktivitas penyewaan dan sewa guna, tanpa hak opsi,
+                    ketenagakerjaan, agen perjalanan, dan penunjang usaha
+                    lainnya
+                  </option>
+                  <option
+                    value="Administrasi pemerintahan, pertahanan, dan jaminan sosial wajib"
+                  >
+                    Administrasi pemerintahan, pertahanan, dan jaminan sosial
+                    wajib
+                  </option>
+                  <option
+                    value="Aktivitas kesehatan manusia dan aktivitas sosial"
+                  >
+                    Aktivitas kesehatan manusia dan aktivitas sosial
+                  </option>
+                  <option value="Kesenian, hiburan, dan rekreasi">
+                    Kesenian, hiburan, dan rekreasi
+                  </option>
+                  <option value="Aktivitas jasa lainnya">
+                    Aktivitas jasa lainnya
+                  </option>
+                  <option value="Aktivitas keluarga sebagai pemberi kerja">
+                    Aktivitas keluarga sebagai pemberi kerja
+                  </option>
+                  <option
+                    value="Aktivitas badan internasional dan badan ekstra internasional lainnya"
+                  >
+                    Aktivitas badan internasional dan badan ekstra internasional
+                    lainnya
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label
+                  >212. Apa yang Dikerjakan di Tempat Kerja/ Deskripsi Pekerjaan
+                  <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  id="inputDeskripsiPekerjaan"
+                  class="form-control"
+                  placeholder="Masukkan deskripsi pekerjaan"
+                />
+              </div>
+
+              <div class="form-field">
+                <label
+                  >213. Status dalam Pekerjaan Utama
+                  <span class="text-danger">*</span></label
+                >
+                <select id="inputStatusPekerjaan" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Berusaha sendiri">Berusaha sendiri</option>
+                  <option value="Berusaha Dibantu Buruh Tetap/Dibayar">
+                    Berusaha Dibantu Buruh Tetap/Dibayar
+                  </option>
+                  <option
+                    value="Berusaha Dibantu Buruh Tidak Tetap/Tidak Dibayar"
+                  >
+                    Berusaha Dibantu Buruh Tidak Tetap/Tidak Dibayar
+                  </option>
+                  <option value="Buruh/Karyawan/Pegawai Swasta">
+                    Buruh/Karyawan/Pegawai Swasta
+                  </option>
+                  <option value="ASN/TNI/Polri/BUMN/BUMD/pejabat negara">
+                    ASN/TNI/Polri/BUMN/BUMD/pejabat negara
+                  </option>
+                  <option value="Pekerja Bebas pertanian">
+                    Pekerja Bebas pertanian
+                  </option>
+                  <option value="Pekerja Bebas Non Pertanian">
+                    Pekerja Bebas Non Pertanian
+                  </option>
+                  <option value="Pekerja Keluarga/Tidak Dibayar">
+                    Pekerja Keluarga/Tidak Dibayar
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label
+                  >214. Pendapatan Sebulan Terakhir
+                  <span class="text-danger">*</span></label
+                >
+                <select id="inputPendapatan" class="form-select">
+                  <option value="" disabled selected>Pilih salah satu</option>
+                  <option value="Tidak ada penghasilan">
+                    Tidak ada penghasilan
+                  </option>
+                  <option value="< 1.000.000">&lt; 1.000.000</option>
+                  <option value="> 999.999 s.d. < UMK">
+                    &gt; 999.999 s.d. &lt; UMK
+                  </option>
+                  <option value="> UMK s.d. 10.000.000">
+                    &gt; UMK s.d. 10.000.000
+                  </option>
+                  <option value="> 10.000.000">&gt; 10.000.000</option>
+                </select>
+              </div>
+
+              <!-- Button Simpan Form -->
+              <div class="form-save-action">
+                <button
+                  type="button"
+                  class="btn-primary-blue"
+                  onclick="saveMemberForm()"
+                >
+                  <i class="fa-solid fa-check"></i> Simpan Anggota Keluarga
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- ==========================================
+                     STATE 3: DAFTAR TERISI (Gambar 3)
+                     ========================================== -->
+          <div id="stateList" class="list-state" style="display: none">
+            <!-- Container List Card Anggota -->
+            <div id="memberListContainer" class="member-list-container">
+              <!-- Card item dinamis akan dirender lewat JavaScript di sini -->
+            </div>
+
+            <!-- Tombol Tambah Anggota Lain -->
+            <button
+              type="button"
+              class="btn-add-more"
+              onclick="openMemberForm()"
+            >
+              <i class="fa-solid fa-plus"></i> Tambah Anggota Keluarga Lain
+            </button>
+          </div>
+        </div>
+        <!-- Akhir main-card -->
+
+        <!-- Bottom Action Buttons -->
+        <div class="action-buttons">
+          <button
+            type="button"
+            class="btn-action btn-prev"
+            onclick="handlePrev()"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Sebelumnya</span>
+          </button>
+
+          <button
+            type="button"
+            class="btn-action btn-draft"
+            onclick="handleSaveDraft()"
+          >
+            <i class="fa-regular fa-floppy-disk"></i>
+            <span>Simpan Draft</span>
+          </button>
+
+          <button
+            type="button"
+            class="btn-action btn-next"
+            onclick="handleNext()"
+          >
+            <span>Selanjutnya</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- JavaScript Logika State -->
+    <script>
+      // Array untuk menyimpan data anggota keluarga
+      let membersData = [];
+
+      // Element Referensi
+      const stateEmpty = document.getElementById("stateEmpty");
+      const stateForm = document.getElementById("stateForm");
+      const stateList = document.getElementById("stateList");
+      const infoAlert = document.getElementById("infoAlert");
+      const memberListContainer = document.getElementById(
+        "memberListContainer",
+      );
+
+      // Form Inputs
+      const editingMemberId = document.getElementById("editingMemberId");
+      const formBadgeNumber = document.getElementById("formBadgeNumber");
+      const formMemberTitle = document.getElementById("formMemberTitle");
+      const inputNama = document.getElementById("inputNama");
+      const inputNik = document.getElementById("inputNik");
+      const inputHubungan = document.getElementById("inputHubungan");
+
+      // Fungsi Buka Form (Tambah Baru / Edit)
+      function openMemberForm(id = null) {
+        stateEmpty.style.display = "none";
+        stateList.style.display = "none";
+        stateForm.style.display = "block";
+        infoAlert.style.display = "none"; // Sembunyikan alert saat di dalam form
+
+        if (id !== null) {
+          // Mode Edit
+          const member = membersData.find((m) => m.id === id);
+          if (member) {
+            editingMemberId.value = member.id;
+            formBadgeNumber.textContent = member.indexNumber;
+            formMemberTitle.textContent = `Anggota ke-${member.indexNumber}`;
+            inputNama.value = member.nama;
+            inputNik.value = member.nik;
+            inputHubungan.value = member.hubungan;
+
+            // Set radio
+            const radios = document.getElementsByName("keberadaan");
+            radios.forEach((r) => (r.checked = r.value === member.keberadaan));
+          }
+        } else {
+          // Mode Tambah Baru
+          const nextNumber = membersData.length + 1;
+          editingMemberId.value = "";
+          formBadgeNumber.textContent = nextNumber;
+          formMemberTitle.textContent = `Anggota ke-${nextNumber}`;
+          document.getElementById("memberForm").reset();
+        }
+      }
+
+      // Fungsi Simpan Form
+      function saveMemberForm() {
+        const nama = inputNama.value.trim();
+        const nik = inputNik.value.trim();
+        const hubungan = inputHubungan.value;
+
+        let keberadaan = "";
+        const radios = document.getElementsByName("keberadaan");
+        radios.forEach((r) => {
+          if (r.checked) keberadaan = r.value;
+        });
+
+        const currentId = editingMemberId.value;
+
+        if (currentId !== "") {
+          // Update data yang ada
+          const idx = membersData.findIndex((m) => m.id == currentId);
+          if (idx !== -1) {
+            membersData[idx].nama = nama;
+            membersData[idx].nik = nik;
+            membersData[idx].hubungan = hubungan;
+            membersData[idx].keberadaan = keberadaan;
+          }
+        } else {
+          // Tambah data baru
+          const newMember = {
+            id: Date.now(),
+            indexNumber: membersData.length + 1,
+            nama: nama,
+            nik: nik,
+            hubungan: hubungan,
+            keberadaan: keberadaan,
+          };
+          membersData.push(newMember);
+        }
+
+        renderView();
+      }
+
+      // Fungsi Kembali ke Daftar
+      function backToList() {
+        renderView();
+      }
+
+      // Fungsi Hapus Anggota
+      function deleteMember(id, event) {
+        event.stopPropagation(); // Mencegah pemicu klik card
+        if (confirm("Apakah Anda yakin ingin menghapus anggota ini?")) {
+          membersData = membersData.filter((m) => m.id !== id);
+          // Re-index nomor urut
+          membersData.forEach((m, i) => (m.indexNumber = i + 1));
+          renderView();
+        }
+      }
+
+      // Render Tampilan Berdasarkan State Data
+      function renderView() {
+        stateForm.style.display = "none";
+
+        if (membersData.length === 0) {
+          // Gambar 1: State Kosong
+          stateEmpty.style.display = "block";
+          stateList.style.display = "none";
+          infoAlert.style.display = "block";
+        } else {
+          // Gambar 3: State Ada Data
+          stateEmpty.style.display = "none";
+          stateList.style.display = "block";
+          infoAlert.style.display = "block";
+
+          // Render List Member
+          memberListContainer.innerHTML = "";
+          membersData.forEach((member) => {
+            const isLengkap = member.nama && member.hubungan && member.nik;
+
+            const cardHtml = `
+                        <div class="member-card-item" onclick="openMemberForm(${member.id})">
+                            <div class="member-card-left">
+                                <div class="member-card-badge">${member.indexNumber}</div>
+                                <div class="member-card-info">
+                                    <div class="member-card-name ${!member.nama ? "text-italic-gray" : ""}">
+                                        ${member.nama ? member.nama : "Belum diisi nama"}
+                                    </div>
+                                    <div class="member-card-sub ${!member.hubungan ? "text-italic-gray" : ""}">
+                                        ${member.hubungan ? member.hubungan : "Hubungan belum diisi"}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-card-right">
+                                ${
+                                  isLengkap
+                                    ? `<span class="badge-status badge-success"><i class="fa-solid fa-circle-check"></i> Lengkap</span>`
+                                    : `<span class="badge-status badge-warning"><i class="fa-solid fa-circle-exclamation"></i> Belum lengkap</span>`
+                                }
+                                <button type="button" class="btn-delete" onclick="deleteMember(${member.id}, event)">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+            memberListContainer.insertAdjacentHTML("beforeend", cardHtml);
+          });
+        }
+      }
+
+      // Navigasi Bawah
+      function handlePrev() {
+        window.history.back();
+      }
+      function handleSaveDraft() {
+        alert("Draft berhasil disimpan!");
+      }
+      function handleNext() {
+        window.location.href="Dokumentasi.html";
+      }
+
+      // Inisialisasi Tampilan Awal
+      renderView();
+    </script>
+  </body>
+</html>

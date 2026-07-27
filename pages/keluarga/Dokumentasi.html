@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA
+    </title>
+
+    <!-- Font Awesome untuk Ikon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS Eksternal -->
+    <link rel="stylesheet" href="../../css/individu/Dokumentasi.css" />
+  </head>
+  <body>
+    <!-- NAVBAR TOP -->
+    <nav class="navbar">
+      <a href="../../landing.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Beranda
+      </a>
+      <div class="nav-logo">
+        <img src="../../images/logo-bps.webp" alt="Logo BPS" />
+        <div class="logo-text">
+          Badan Pusat Statistik<br />
+          <span>Kota Surabaya</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTAINER UTAMA -->
+    <div class="survei-container">
+      <!-- SIDEBAR PROGRESS -->
+      <aside class="sidebar">
+        <div class="progress-header">
+          <span>Progress Pengisian</span>
+          <span class="progress-percent">50%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 50%"></div>
+        </div>
+
+        <div class="step-list">
+          <!-- Step 1: Selesai -->
+          <a href="IdentitasKeluarga.html" class="step-item completed">
+            <div class="step-left">
+              <div class="step-icon-done">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Identitas Keluarga</span>
+            </div>
+          </a>
+
+          <!-- Step 2: Selesai -->
+          <a
+            href="KeteranganPerumahan.html"
+            class="step-item completed"
+          >
+            <div class="step-left">
+              <div class="step-icon-done">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Keterangan Perumahan</span>
+            </div>
+          </a>
+
+          <!-- Step 3: Aktif (Dokumentasi) -->
+          <a href="#" class="step-item active">
+            <div class="step-left">
+              <div class="step-number">3</div>
+              <span>Dokumentasi</span>
+            </div>
+          </a>
+
+          <!-- Step 4: Menunggu -->
+          <a href="Catatan.html" class="step-item">
+            <div class="step-left">
+              <div class="step-number">4</div>
+              <span>Catatan</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon-wait"></i>
+          </a>
+        </div>
+      </aside>
+
+      <!-- KONTEN UTAMA -->
+      <main class="main">
+        <div class="main-card">
+          <div class="step-tag">BLOK III • Step 3 dari 4</div>
+          <h1 class="form-title">III. Dokumentasi</h1>
+          <p class="form-subtitle">
+            Ground Check Pendataan Desa Cinta Statistik (CANTIK) Kota Surabaya
+          </p>
+
+          <!-- ALERT INFO -->
+          <div class="alert-info-box">
+            <strong>Petunjuk Tambahan:</strong> Unggah foto ruang tamu
+            bangunan/rumah responden. Pastikan foto terlihat jelas, tidak buram,
+            dan berformat <strong>JPG, JPEG, PNG, atau WEBP</strong> (Maksimal 5
+            MB per foto).
+          </div>
+
+          <label>301. Foto Ruang Tamu <span class="text-danger">*</span></label>
+
+          <!-- AREA UPLOAD FOTO (DROPZONE) -->
+          <div class="upload-dropzone" id="dropzone">
+            <input
+              type="file"
+              id="inputFoto"
+              accept="image/*"
+              multiple
+              hidden
+            />
+
+            <div class="upload-icon-wrapper">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <h3 class="upload-title">Tarik & Lepas Foto di Sini</h3>
+            <p class="upload-subtitle">
+              atau klik tombol di bawah untuk memilih file dari galeri / kamera
+            </p>
+
+            <button
+              type="button"
+              class="btn-primary-blue"
+              onclick="document.getElementById('inputFoto').click()"
+            >
+              <i class="fa-solid fa-camera"></i> Pilih / Ambil Foto
+            </button>
+
+            <div class="upload-hint-text">
+              Format: JPG, PNG, WEBP (Max: 5MB)
+            </div>
+          </div>
+
+          <!-- AREA PREVIEW FOTO (TAMPIL OTOMATIS SAAT ADA FOTO) -->
+          <div
+            class="preview-section"
+            id="previewSection"
+            style="display: none"
+          >
+            <div class="preview-header-title" id="previewCount">
+              Foto Terunggah (0)
+            </div>
+            <div class="photo-grid" id="photoGrid">
+              <!-- Preview kartu foto akan dimasukkan otomatis lewat JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TOMBOL AKSI BAWAH -->
+        <div class="action-buttons">
+          <!-- 1. Tombol Sebelumnya -->
+          <button
+            type="button"
+            class="btn-action btn-prev"
+            onclick="handlePrev()"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Sebelumnya</span>
+          </button>
+
+          <!-- 2. Tombol Simpan Draft -->
+          <button
+            type="button"
+            class="btn-action btn-draft"
+            onclick="handleSaveDraft()"
+          >
+            <i class="fa-regular fa-floppy-disk"></i>
+            <span>Simpan Draft</span>
+          </button>
+
+          <!-- 3. Tombol Selanjutnya -->
+          <button
+            type="button"
+            class="btn-action btn-next"
+            onclick="handleNext()"
+          >
+            <span>Selanjutnya</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- JAVASCRIPT PREVIEW & DRAG-DROP -->
+    <script>
+      const inputFoto = document.getElementById("inputFoto");
+      const dropzone = document.getElementById("dropzone");
+      const previewSection = document.getElementById("previewSection");
+      const photoGrid = document.getElementById("photoGrid");
+      const previewCount = document.getElementById("previewCount");
+
+      // Array untuk menyimpan file yang diunggah
+      let uploadedFiles = [];
+
+      // 1. EVENT LISTENERS PADA INPUT FILE
+      inputFoto.addEventListener("change", (e) => {
+        handleFiles(e.target.files);
+        inputFoto.value = ""; // Reset input agar bisa pilih file yang sama jika dihapus
+      });
+
+      // 2. EVENT LISTENERS DRAG & DROP
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropzone.addEventListener(
+          eventName,
+          (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.add("dragover");
+          },
+          false,
+        );
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropzone.addEventListener(
+          eventName,
+          (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove("dragover");
+          },
+          false,
+        );
+      });
+
+      dropzone.addEventListener("drop", (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+      });
+
+      // 3. FUNGSI MEMPROSES FILE
+      function handleFiles(files) {
+        const maxMB = 5;
+        const maxBytes = maxMB * 1024 * 1024;
+
+        Array.from(files).forEach((file) => {
+          // Validasi tipe file
+          if (!file.type.startsWith("image/")) {
+            alert(`File "${file.name}" bukan berupa gambar!`);
+            return;
+          }
+          // Validasi ukuran file
+          if (file.size > maxBytes) {
+            alert(
+              `File "${file.name}" melebihi batas ukuran maksimal ${maxMB} MB!`,
+            );
+            return;
+          }
+
+          uploadedFiles.push(file);
+        });
+
+        renderPreviews();
+      }
+
+      // 4. FUNGSI MENAMPILKAN KARTU PREVIEW FOTO
+      function renderPreviews() {
+        photoGrid.innerHTML = "";
+
+        if (uploadedFiles.length === 0) {
+          previewSection.style.display = "none";
+          return;
+        }
+
+        previewSection.style.display = "block";
+        previewCount.textContent = `Foto Terunggah (${uploadedFiles.length})`;
+
+        uploadedFiles.forEach((file, index) => {
+          const imageUrl = URL.createObjectURL(file);
+          const fileSizeFormatted = formatFileSize(file.size);
+
+          const photoCard = document.createElement("div");
+          photoCard.className = "photo-card";
+          photoCard.innerHTML = `
+                    <img src="${imageUrl}" alt="Preview Foto">
+                    <div class="photo-info">
+                        <span class="photo-name" title="${file.name}">${file.name}</span>
+                        <span class="photo-size">${fileSizeFormatted}</span>
+                    </div>
+                    <button type="button" class="btn-remove-photo" title="Hapus Foto" onclick="removeFile(${index})">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+
+          photoGrid.appendChild(photoCard);
+        });
+      }
+
+      // 5. FUNGSI HAPUS FOTO INDIVIDUAL
+      function removeFile(index) {
+        uploadedFiles.splice(index, 1);
+        renderPreviews();
+      }
+
+      // 6. HELPER FORMAT UKURAN FILE (KB / MB)
+      function formatFileSize(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+      }
+
+      // 7. FUNGSI TOMBOL NAVIGASI BAWAH
+      function handlePrev() {
+        window.history.back();
+      }
+
+      function handleSaveDraft() {
+        if (uploadedFiles.length === 0) {
+          alert("Draft disimpan tanpa foto.");
+        } else {
+          alert(`Draft berhasil disimpan dengan ${uploadedFiles.length} foto!`);
+        }
+      }
+
+      function handleNext() {
+        window.location.href="Catatan.html";
+      }
+    </script>
+  </body>
+</html>

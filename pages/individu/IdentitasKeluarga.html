@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA
+    </title>
+
+    <!-- Link CSS Eksternal -->
+    <link rel="stylesheet" href="../../css/individu/survei.css" />
+
+    <!-- FontAwesome untuk Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Top Navbar -->
+    <header class="navbar">
+      <a href="../../landing.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i> Beranda
+      </a>
+      <div class="nav-logo">
+        <img src="../../images/logo-bps.webp" alt="Logo BPS" />
+        <div class="logo-text">Badan Pusat Statistik<br />Kota Surabaya</div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="survei-container">
+      <!-- Left Sidebar / Progress -->
+      <aside class="sidebar">
+        <div class="progress-header">
+          <span>Progress Pengisian</span>
+          <span class="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill"></div>
+        </div>
+
+        <nav class="step-list">
+          <!-- Step 1 (Active) -->
+          <a href="#" class="step-item active">
+            <div class="step-left">
+              <span class="step-number">1</span>
+              <span>Identitas Keluarga</span>
+            </div>
+          </a>
+
+          <!-- Step 2 -->
+          <a href="KeteranganDemografi.html" class="step-item">
+            <div class="step-left">
+              <span class="step-number">2</span>
+              <span>Keterangan Demografi</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon"></i>
+          </a>
+
+          <!-- Step 3 -->
+          <a href="Dokumentasi.html" class="step-item">
+            <div class="step-left">
+              <span class="step-number">3</span>
+              <span>Dokumentasi</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon"></i>
+          </a>
+
+          <!-- Step 4 -->
+          <a href="Catatan.html" class="step-item">
+            <div class="step-left">
+              <span class="step-number">4</span>
+              <span>Catatan</span>
+            </div>
+            <i class="fa-regular fa-clock step-icon"></i>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Right Main Content -->
+      <main class="main">
+        <div class="main-card">
+          <div class="step-tag">BLOK I &bull; Step 1 dari 4</div>
+          <h1 class="form-title">I. Identitas Keluarga</h1>
+          <p class="form-subtitle">
+            Ground Check Pendataan Desa Cinta Statistik (CANTIK) Kota Surabaya
+          </p>
+
+          <!-- Alert Notice -->
+          <div class="alert-box">
+            <strong>Blok I</strong> Penulisan kata menggunakan huruf kapital,
+            tidak disingkat kecuali terlalu panjang.
+          </div>
+
+          <form action="#" method="POST">
+            <!-- RINCIAN 1 -->
+            <div class="section-title">RINCIAN 1 &mdash; KEPALA KELUARGA</div>
+
+            <div class="form-field">
+              <label
+                >a. Nama Kepala Keluarga
+                <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                placeholder="Tuliskan nama lengkap sesuai KK"
+              />
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <label
+                  >b. NIK Kepala Keluarga
+                  <span class="text-danger">*</span></label
+                >
+                <input type="text" maxlength="16" />
+                <div class="form-hint">16 digit angka</div>
+              </div>
+              <div class="form-field">
+                <label
+                  >c. Nomor Kartu Keluarga (KK)
+                  <span class="text-danger">*</span></label
+                >
+                <input type="text" maxlength="16" />
+                <div class="form-hint">16 digit angka</div>
+              </div>
+            </div>
+
+            <!-- RINCIAN 2 -->
+            <div class="section-title">RINCIAN 2 &mdash; ALAMAT</div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <label>a. Provinsi <span class="text-danger">*</span></label>
+                <input type="text" />
+              </div>
+              <div class="form-field">
+                <label
+                  >b. Kabupaten/Kota <span class="text-danger">*</span></label
+                >
+                <input type="text" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <label>c. Kecamatan <span class="text-danger">*</span></label>
+                <input type="text" />
+              </div>
+              <div class="form-field">
+                <label
+                  >d. Kelurahan/Desa <span class="text-danger">*</span></label
+                >
+                <input type="text" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-field">
+                <label>e. RW <span class="text-danger">*</span></label>
+                <input type="text" />
+              </div>
+              <div class="form-field">
+                <label>f. RT <span class="text-danger">*</span></label>
+                <input type="text" />
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label
+                >g. Alamat Lengkap <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                placeholder="Tuliskan alamat lengkap sesuai KK"
+              />
+            </div>
+
+            <!-- RINCIAN 3 -->
+            <div class="section-title">
+              RINCIAN 3 &mdash; KETERANGAN PENDATAAN
+            </div>
+
+            <div class="form-field">
+              <label>a. Nama Informan <span class="text-danger">*</span></label>
+              <input type="text" placeholder="Tuliskan nama informan" />
+            </div>
+
+            <div class="form-field">
+              <label>b. Nama Petugas <span class="text-danger">*</span></label>
+              <input type="text" placeholder="Tuliskan nama petugas" />
+            </div>
+          </form>
+        </div>
+
+        <!-- GROUP TOMBOL AKSI DI BAGIAN BAWAH -->
+        <div class="action-buttons">
+          <!-- 1. Tombol Sebelumnya -->
+          <button
+            type="button"
+            class="btn-action btn-prev"
+            onclick="handlePrev()"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Sebelumnya</span>
+          </button>
+
+          <!-- 2. Tombol Simpan Draft -->
+          <button
+            type="button"
+            class="btn-action btn-draft"
+            onclick="handleSaveDraft()"
+          >
+            <i class="fa-regular fa-floppy-disk"></i>
+            <span>Simpan Draft</span>
+          </button>
+
+          <!-- 3. Tombol Selanjutnya -->
+          <button
+            type="button"
+            class="btn-action btn-next"
+            onclick="handleNext()"
+          >
+            <span>Selanjutnya</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Fungsi untuk Tombol Sebelumnya
+      function handlePrev() {
+        // Kembali ke halaman sebelumnya
+        window.history.back();
+      }
+
+      // Fungsi untuk Tombol Simpan Draft
+      function handleSaveDraft() {
+        alert("Draft berhasil disimpan!");
+        // Tambahkan logika simpan draft sementara Anda di sini
+      }
+
+      // Fungsi untuk Tombol Selanjutnya
+      function handleNext() {
+        // Pindah ke step / halaman berikutnya
+        window.location.href="KeteranganDemografi.html"; // Ganti dengan URL tujuan Anda
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,675 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #f3f0ff 0%, #f8f7fc 50%, #ede8fb 100%);
+    min-height: 100vh;
+    color: #1f2937;
+}
+
+/* ==========================================
+   HEADER / NAVBAR TOP
+   ========================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nav-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.2s ease;
+}
+
+.nav-back:hover {
+    color: #5b3cc4;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo img {
+    height: 38px;
+}
+
+.logo-text {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* ==========================================
+   LAYOUT CONTAINER & SIDEBAR PROGRESS
+   ========================================== */
+.survei-container {
+    max-width: 1350px;
+    margin: 10px auto 40px;
+    padding: 0 20px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.sidebar {
+    width: 280px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    flex-shrink: 0;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.progress-percent {
+    color: #5b3cc4;
+    font-weight: 700;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background-color: #f0ebff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #5b3cc4;
+}
+
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #4b5563;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
+}
+
+.step-item:hover:not(.active) {
+    background-color: #f3effe;
+    color: #5b3cc4;
+}
+
+.step-item.active {
+    background-color: #5b3cc4;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(91, 60, 196, 0.25);
+}
+
+.step-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.step-item.active .step-number {
+    background-color: #ffffff;
+    color: #5b3cc4;
+}
+
+.step-icon-done {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #5b3cc4;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+
+.step-item.completed {
+    background-color: #f9fafb;
+    color: #1f2937;
+}
+
+.step-icon-wait {
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+/* ==========================================
+   MAIN CONTENT WRAPPER & CARD
+   ========================================== */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.main-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.step-tag {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.form-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+/* Alert Info Box (Mengikuti Style Alert Ungu Sesuai Desain) */
+.alert-info-box {
+    background-color: #f3f0ff;
+    border-left: 4px solid #5b3cc4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #4c2882;
+    line-height: 1.5;
+    margin-bottom: 28px;
+}
+
+/* ==========================================
+   STATE 1: EMPTY STATE
+   ========================================== */
+.empty-state {
+    border: 2px dashed #e5deff;
+    border-radius: 14px;
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #faf8fe;
+}
+
+.empty-icon {
+    font-size: 36px;
+    color: #9373ee;
+    margin-bottom: 12px;
+}
+
+.empty-text {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+/* Tombol Tambah Utama (btn-primary-blue disesuaikan ke tema ungu) */
+.btn-primary-blue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background-color: #5b3cc4;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(91, 60, 196, 0.3);
+    transition: all 0.2s ease;
+}
+
+.btn-primary-blue:hover {
+    background-color: #4a2ba6;
+}
+
+/* ==========================================
+   STATE 2: FORM STATE
+   ========================================== */
+.btn-back-link {
+    background: none;
+    border: none;
+    color: #5b3cc4;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.btn-back-link:hover {
+    color: #3c2391;
+}
+
+.member-form-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f3f4f6;
+    margin-bottom: 20px;
+}
+
+.member-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #5b3cc4;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.member-form-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.member-form-subtitle {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Title Section Form (section-green-title disesuaikan ke tema ungu) */
+.section-green-title {
+    color: #5b3cc4;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 28px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+/* Grid & Inputs */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-field {
+    margin-bottom: 18px;
+}
+
+.form-field label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.text-danger {
+    color: #ef4444;
+}
+
+.form-field input,
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+    color: #1f2937;
+}
+
+.form-field input:focus,
+.form-select:focus {
+    border-color: #5b3cc4;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px #5b3cc4;
+}
+
+.form-hint {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+}
+
+/* Radio Cards (Sesuai Desain Halaman Sebelumnya) */
+.radio-option-card {
+    margin-top: 10px;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+}
+
+.radio-container:hover {
+    border-color: #5b3cc4;
+    background-color: #fcfaff;
+}
+
+.radio-container input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.radio-container input[type="radio"]:checked {
+    border-color: #5b3cc4;
+    background-color: #ffffff;
+}
+
+.radio-container input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #5b3cc4;
+}
+
+.radio-container:has(input[type="radio"]:checked) {
+    border-color: #5b3cc4;
+    box-shadow: 0 0 0 1px #5b3cc4;
+    background-color: #f8f6fe;
+}
+
+.form-save-action {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ==========================================
+   STATE 3: LIST MEMBER STATE
+   ========================================== */
+.member-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.member-card-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.member-card-item:hover {
+    border-color: #5b3cc4;
+    box-shadow: 0 4px 12px rgba(91, 60, 196, 0.08);
+}
+
+.member-card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.member-card-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e5deff;
+    color: #5b3cc4;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.member-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.member-card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.member-card-sub {
+    font-size: 12.5px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.text-italic-gray {
+    font-style: italic;
+    color: #9ca3af;
+}
+
+.member-card-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.badge-status {
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-warning {
+    color: #d97706;
+    background-color: #fffbebf5;
+}
+
+.badge-success {
+    color: #059669;
+    background-color: #ecfdf5;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+    transition: color 0.2s;
+}
+
+.btn-delete:hover {
+    color: #ef4444;
+}
+
+.btn-add-more {
+    width: 100%;
+    padding: 14px;
+    border: 1px dashed #c4b5fd;
+    border-radius: 12px;
+    background-color: #faf8fe;
+    color: #5b3cc4;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-add-more:hover {
+    background-color: #f3f0ff;
+    border-color: #5b3cc4;
+}
+
+/* ==========================================
+   ACTION BUTTONS (TOMBOL DI LUAR CARD)
+   ========================================== */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+/* 1. Tombol 'Sebelumnya' */
+.btn-prev {
+    background-color: #e5deff;
+    color: #5b3cc4;
+    border: none;
+}
+
+.btn-prev:hover {
+    background-color: #d6ccff;
+}
+
+/* 2. Tombol 'Simpan Draft' */
+.btn-draft {
+    background-color: #ffffff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.btn-draft:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+/* 3. Tombol 'Selanjutnya' */
+.btn-next {
+    background-color: #5b3cc4;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(91, 60, 196, 0.3);
+}
+
+.btn-next:hover {
+    background-color: #4a2ba6;
+}
+
+/* ==========================================
+   RESPONSIF LAYAR KECIL / HP
+   ========================================== */
+@media (max-width: 900px) {
+    .survei-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn-action {
+        width: 100%;
+    }
+}
