@@ -6,7 +6,7 @@
     <title>GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA</title>
 
     <!-- Memanggil file CSS eksternal -->
-    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/index.css">
     
     <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +17,7 @@
         
         <!-- Header / Logo BPS -->
         <div class="header">
-            <img src="images/logo-bps.webp" alt="Logo BPS">
+            <img src="images/logo-bps.webp" alt="Logo BPS" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/28/Lambang_Badan_Pusat_Statistik_%28BPS%29_Indonesia.svg'">
             <div class="header-text">
                 Badan Pusat Statistik<br>
                 Kota Surabaya
@@ -27,82 +27,52 @@
         <!-- Form Card -->
         <div class="card">
             <h2>GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA</h2>
-            <p>Silakan isi data penanggung jawab pengisian kuesioner (PIC) sebelum melanjutkan ke formulir survei.</p>
+            <p>Pilih menu di bawah ini untuk melanjutkan ke menu yang diinginkan.</p>
 
-            <!-- Menambahkan id="picForm" dan menghapus atribut action/method -->
             <form id="picForm">
 
-                <!-- Nama Petugas -->
-                <div class="form-group">
-                    <label>Nama petugas <span class="text-danger">*</span></label>
-                    <div class="input-wrapper">
-                        <i class="fa-regular fa-user"></i>
-                        <input type="text" name="nama_petugas" placeholder="Nama lengkap Petugas" required>
-                    </div>
-                </div>
-
-                <!-- Nomor Telepon/WhatsApp -->
-                <div class="form-group">
-                    <label>Nomor Telepon/WhatsApp <span class="text-danger">*</span></label>
-                    <div class="input-wrapper">
-                        <i class="fa-solid fa-phone"></i>
-                        <input type="tel" name="no_telp" placeholder="08xxxxxxxxxx" required>
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="form-group">
-                    <label>Email <span class="text-danger">*</span></label>
-                    <div class="input-wrapper">
-                        <i class="fa-regular fa-envelope"></i>
-                        <input type="email" name="email" placeholder="email@perusahaan.com" required>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="form-group submit-group">
-                    <button type="submit" id="btnRumahTangga" class="btn-submit">
-                        Lanjut ke Pendataan Rumah Tangga
+                <!-- Group Tombol Navigasi -->
+                <div class="button-group">
+                    <button type="submit" id="btnSaranaPrasarana" class="btn-submit">
+                        Sarana dan Prasarana
+                    </button>
+                    <button type="submit" id="btnGroundCheck" class="btn-submit">
+                        Ground Check Desa Cantik
+                    </button>
+                    <button type="submit" id="btnDaftarList" class="btn-submit">
+                        Daftar List
                     </button>
                 </div>
 
-                <div class="form-group submit-group">
-                    <button type="submit" id="btnIndividu" class="btn-submit">
-                        Lanjut ke Pendataan Individu
-                    </button>
-                </div>
             </form>
         </div>
     </div>
 
     <!-- Script Front-End Only -->
     <script>
-        // Gunakan variabel global untuk menentukan tujuan navigasi
         let destination = '';
 
-        document.getElementById('btnRumahTangga').addEventListener('click', function() {
-            destination = 'pages/keluarga/IdentitasKeluarga.html';
+        document.getElementById('btnSaranaPrasarana').addEventListener('click', function() {
+            destination = '#';
         });
 
-        document.getElementById('btnIndividu').addEventListener('click', function() {
-            destination = 'pages/individu/IdentitasKeluarga.html';
+        document.getElementById('btnGroundCheck').addEventListener('click', function() {
+            destination = 'index2.html';
+        });
+
+        document.getElementById('btnDaftarList').addEventListener('click', function() {
+            destination = '#';
         });
 
         document.getElementById('picForm').addEventListener('submit', function(e) {
-            // Mencegah browser me-reload halaman
             e.preventDefault(); 
             
-            // 1. Ambil data dari form (Opsional jika ingin ditampilkan di halaman berikutnya)
-            const formData = {
-                nama: this.nama_petugas.value,
-                telp: this.no_telp.value,
-                email: this.email.value
-            };
+            // Default jika disubmit dengan Enter
+            if (!destination) {
+                destination = '#';
+            }
 
-            // 2. Simpan di Local Storage Browser (Opsional)
-            localStorage.setItem('data_pic', JSON.stringify(formData));
-
-            // Navigasi ke halaman yang dipilih
+            // Navigasi ke halaman tujuan
             if (destination) {
                 window.location.href = destination;
             }
