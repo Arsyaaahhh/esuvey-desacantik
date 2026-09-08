@@ -162,6 +162,8 @@
     </div>
 
     <!-- JAVASCRIPT UNTUK CHAR COUNTER & NAVIGASI -->
+    <script src="../../js/config.js"></script>
+    <script src="../../js/survey-store.js"></script>
     <script>
       const inputCatatan = document.getElementById("inputCatatan");
       const charCounter = document.getElementById("charCounter");
@@ -184,13 +186,90 @@
       }
 
       function handleSaveDraft() {
+        SurveyStore.save({ catatan: inputCatatan.value.trim() });
         alert("Draft catatan berhasil disimpan!");
       }
 
-      function handleSubmit() {
-        alert("Seluruh data survei berhasil dikirim!");
-        // Arahkan ke halaman sukses/beranda
-        window.location.href = "../../index.html";
+      async function handleSubmit() {
+        const submitBtn = document.querySelector(".btn-submit");
+        const survey = SurveyStore.getAll();
+        const members = survey.members || [];
+
+        if (members.length === 0) {
+          alert("Belum ada anggota keluarga yang ditambahkan di step Keterangan Demografi.");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirim...</span>';
+
+        try {
+          const pic = SurveyStore.getPic();
+          const photos = SurveyStore.getPhotos();
+          const catatan = inputCatatan.value.trim();
+
+          // Satu baris di sheet "Individu_Anggota" per anggota keluarga
+          for (const member of members) {
+            const payload = {
+              pic_nama: pic.nama || "",
+              pic_telp: pic.telp || "",
+              pic_email: pic.email || "",
+              nama_kepala_keluarga: survey.nama_kepala_keluarga || "",
+              nik_kepala_keluarga: survey.nik_kepala_keluarga || "",
+              no_kk: survey.no_kk || "",
+              provinsi: survey.provinsi || "",
+              kabupaten_kota: survey.kabupaten_kota || "",
+              kecamatan: survey.kecamatan || "",
+              kelurahan_desa: survey.kelurahan_desa || "",
+              rw: survey.rw || "",
+              rt: survey.rt || "",
+              alamat_lengkap: survey.alamat_lengkap || "",
+              nama_informan: survey.nama_informan || "",
+              nama_petugas: survey.nama_petugas || "",
+              anggota_ke: member.indexNumber || "",
+              nama_anggota: member.nama || "",
+              nik_anggota: member.nik || "",
+              jenis_kelamin: member.jenis_kelamin || "",
+              tanggal_lahir: member.tanggal_lahir || "",
+              umur: member.umur || "",
+              hubungan_kk: member.hubungan || "",
+              partisipasi_sekolah: member.partisipasi_sekolah || "",
+              pendidikan_tertinggi: member.pendidikan_tertinggi || "",
+              kelas_tertinggi: member.kelas_tertinggi || "",
+              ijazah_sttb: member.ijazah_sttb || "",
+              bekerja: member.bekerja || "",
+              lapangan_usaha: member.lapangan_usaha || "",
+              deskripsi_pekerjaan: member.deskripsi_pekerjaan || "",
+              status_pekerjaan_utama: member.status_pekerjaan_utama || "",
+              pendapatan_sebulan: member.pendapatan_sebulan || "",
+              catatan: catatan,
+            };
+
+            // Foto cuma perlu diupload sekali (di baris anggota pertama),
+            // baris berikutnya cukup ikut link yang sama tanpa upload ulang.
+            const isFirst = member === members[0];
+            const result = await SurveyStore.submit(
+              "Individu_Anggota",
+              payload,
+              isFirst ? photos : [],
+            );
+            if (!result || !result.success) {
+              throw new Error((result && result.error) || "Gagal mengirim data anggota " + (member.nama || member.indexNumber));
+            }
+          }
+
+          SurveyStore.clear();
+          SurveyStore.clearPhotos();
+          alert("Seluruh data survei berhasil dikirim!");
+          window.location.href = "../../index.html";
+        } catch (err) {
+          alert(
+            "Gagal mengirim data: " + err.message +
+            "\n\nPastikan APPS_SCRIPT_URL di js/config.js sudah diisi URL Web App yang benar, dan koneksi internet aktif.",
+          );
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> <span>Selesai & Kirim</span>';
+        }
       }
     </script>
   </body>

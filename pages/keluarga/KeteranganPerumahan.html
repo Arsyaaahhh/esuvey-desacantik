@@ -454,17 +454,49 @@
     </div>
 
     <!-- JAVASCRIPT NAVIGASI -->
+    <script src="../../js/config.js"></script>
+    <script src="../../js/survey-store.js"></script>
     <script>
+      function collectPerumahanData() {
+        const val = (id) => {
+          const el = document.getElementById(id);
+          return el ? el.value.trim() : "";
+        };
+        return {
+          q201_status_kepemilikan_bangunan: val("q201"),
+          q202_status_kepemilikan_lahan: val("q202"),
+          q203_luas_lantai_m2: val("q203"),
+          q204_jenis_lantai: val("q204"),
+          q205_jenis_dinding: val("q205"),
+          q206_jenis_atap: val("q206"),
+          q207_sumber_air_minum: val("q207"),
+          q208_fasilitas_bab: val("q208"),
+          q209_jenis_kloset: val("q209"),
+          q210_pembuangan_akhir_tinja: val("q210"),
+          art1_nama: val("art1_nama"),
+          art1_deskripsi_pekerjaan: val("art1_deskripsi"),
+          art1_penghasilan: val("art1_penghasilan"),
+          art2_nama: val("art2_nama"),
+          art2_deskripsi_pekerjaan: val("art2_deskripsi"),
+          art2_penghasilan: val("art2_penghasilan"),
+          art3_nama: val("art3_nama"),
+          art3_deskripsi_pekerjaan: val("art3_deskripsi"),
+          art3_penghasilan: val("art3_penghasilan"),
+        };
+      }
+
       function handlePrev() {
         window.history.back();
       }
 
       function handleSaveDraft() {
+        SurveyStore.save(collectPerumahanData());
         alert("Draft Keterangan Perumahan berhasil disimpan!");
       }
 
       function handleNext() {
-        window.location.href="Dokumentasi.html";
+        SurveyStore.save(collectPerumahanData());
+        window.location.href = "Dokumentasi.html";
       }
     </script>
   </body>
