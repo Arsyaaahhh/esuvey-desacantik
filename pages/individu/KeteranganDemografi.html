@@ -140,6 +140,7 @@
                 >
                 <input
                   type="text"
+                  id="inputNama"
                   placeholder="Tuliskan nama lengkap sesuai KK"
                 />
               </div>
@@ -150,7 +151,7 @@
                     >202. NIK Kepala Keluarga
                     <span class="text-danger">*</span></label
                   >
-                  <input type="text" maxlength="16" />
+                  <input type="text" id="inputNik" maxlength="16" />
                   <div class="form-hint">16 digit angka</div>
                 </div>
                 <div class="form-field">
@@ -181,7 +182,7 @@
                 </div>
                 <div class="form-field">
                   <label>205. Umur <span class="text-danger">*</span></label>
-                  <input type="text" maxlength="3" />
+                  <input type="text" id="inputUmur" maxlength="3" />
                   <div class="form-hint">Isi dengan angka</div>
                 </div>
               </div>
@@ -541,9 +542,13 @@
     </div>
 
     <!-- JavaScript Logika State -->
+    <script src="../../js/config.js"></script>
+    <script src="../../js/survey-store.js"></script>
     <script>
-      // Array untuk menyimpan data anggota keluarga
-      let membersData = [];
+      // Array untuk menyimpan data anggota keluarga.
+      // Dipulihkan dari SurveyStore kalau sebelumnya sudah pernah diisi
+      // (misalnya user pindah halaman lalu kembali lagi ke sini).
+      let membersData = SurveyStore.getAll().members || [];
 
       // Element Referensi
       const stateEmpty = document.getElementById("stateEmpty");
@@ -562,6 +567,26 @@
       const inputNik = document.getElementById("inputNik");
       const inputHubungan = document.getElementById("inputHubungan");
 
+      // Field-field lain di form anggota (id -> key data)
+      const memberFieldMap = {
+        inputJenisKelamin: "jenis_kelamin",
+        inputTanggalLahir: "tanggal_lahir",
+        inputUmur: "umur",
+        inputPartisipasiSekolah: "partisipasi_sekolah",
+        inputPendidikanTertinggi: "pendidikan_tertinggi",
+        inputKelasTertinggi: "kelas_tertinggi",
+        inputIjzahSTTB: "ijazah_sttb",
+        inputPekerjaan: "bekerja",
+        inputLapanganUsaha: "lapangan_usaha",
+        inputDeskripsiPekerjaan: "deskripsi_pekerjaan",
+        inputStatusPekerjaan: "status_pekerjaan_utama",
+        inputPendapatan: "pendapatan_sebulan",
+      };
+
+      function persistMembers() {
+        SurveyStore.save({ members: membersData });
+      }
+
       // Fungsi Buka Form (Tambah Baru / Edit)
       function openMemberForm(id = null) {
         stateEmpty.style.display = "none";
@@ -576,13 +601,13 @@
             editingMemberId.value = member.id;
             formBadgeNumber.textContent = member.indexNumber;
             formMemberTitle.textContent = `Anggota ke-${member.indexNumber}`;
-            inputNama.value = member.nama;
-            inputNik.value = member.nik;
-            inputHubungan.value = member.hubungan;
-
-            // Set radio
-            const radios = document.getElementsByName("keberadaan");
-            radios.forEach((r) => (r.checked = r.value === member.keberadaan));
+            inputNama.value = member.nama || "";
+            inputNik.value = member.nik || "";
+            inputHubungan.value = member.hubungan || "";
+            Object.keys(memberFieldMap).forEach((elId) => {
+              const el = document.getElementById(elId);
+              if (el) el.value = member[memberFieldMap[elId]] || "";
+            });
           }
         } else {
           // Mode Tambah Baru
@@ -600,10 +625,10 @@
         const nik = inputNik.value.trim();
         const hubungan = inputHubungan.value;
 
-        let keberadaan = "";
-        const radios = document.getElementsByName("keberadaan");
-        radios.forEach((r) => {
-          if (r.checked) keberadaan = r.value;
+        const extraFields = {};
+        Object.keys(memberFieldMap).forEach((elId) => {
+          const el = document.getElementById(elId);
+          extraFields[memberFieldMap[elId]] = el ? el.value.trim() : "";
         });
 
         const currentId = editingMemberId.value;
@@ -612,24 +637,22 @@
           // Update data yang ada
           const idx = membersData.findIndex((m) => m.id == currentId);
           if (idx !== -1) {
-            membersData[idx].nama = nama;
-            membersData[idx].nik = nik;
-            membersData[idx].hubungan = hubungan;
-            membersData[idx].keberadaan = keberadaan;
+            membersData[idx] = {
+              ...membersData[idx],
+              nama, nik, hubungan, ...extraFields,
+            };
           }
         } else {
           // Tambah data baru
           const newMember = {
             id: Date.now(),
             indexNumber: membersData.length + 1,
-            nama: nama,
-            nik: nik,
-            hubungan: hubungan,
-            keberadaan: keberadaan,
+            nama, nik, hubungan, ...extraFields,
           };
           membersData.push(newMember);
         }
 
+        persistMembers();
         renderView();
       }
 
@@ -645,6 +668,7 @@
           membersData = membersData.filter((m) => m.id !== id);
           // Re-index nomor urut
           membersData.forEach((m, i) => (m.indexNumber = i + 1));
+          persistMembers();
           renderView();
         }
       }
@@ -704,10 +728,12 @@
         window.history.back();
       }
       function handleSaveDraft() {
+        persistMembers();
         alert("Draft berhasil disimpan!");
       }
       function handleNext() {
-        window.location.href="Dokumentasi.html";
+        persistMembers();
+        window.location.href = "Dokumentasi.html";
       }
 
       // Inisialisasi Tampilan Awal

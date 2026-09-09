@@ -184,6 +184,8 @@
     </div>
 
     <!-- JAVASCRIPT PREVIEW & DRAG-DROP -->
+    <script src="../../js/config.js"></script>
+    <script src="../../js/survey-store.js"></script>
     <script>
       const inputFoto = document.getElementById("inputFoto");
       const dropzone = document.getElementById("dropzone");
@@ -309,6 +311,17 @@
         window.history.back();
       }
 
+      async function compressAndStorePhotos() {
+        const compressed = await Promise.all(
+          uploadedFiles.map(async (file) => ({
+            filename: file.name,
+            mimeType: "image/jpeg",
+            base64: await SurveyStore.compressImage(file),
+          })),
+        );
+        SurveyStore.savePhotos(compressed);
+      }
+
       function handleSaveDraft() {
         if (uploadedFiles.length === 0) {
           alert("Draft disimpan tanpa foto.");
@@ -317,8 +330,9 @@
         }
       }
 
-      function handleNext() {
-        window.location.href="Catatan.html";
+      async function handleNext() {
+        await compressAndStorePhotos();
+        window.location.href = "Catatan.html";
       }
     </script>
   </body>
