@@ -19,7 +19,7 @@
   <body>
     <!-- Top Navbar -->
     <header class="navbar">
-      <a href="../../index.html" class="nav-back">
+      <a href="../../index.html" class="nav-back" onclick="SurveyStore.save(collectIdentitasData())">
         <i class="fa-solid fa-arrow-left"></i> Beranda
       </a>
       <div class="nav-logo">
@@ -50,7 +50,7 @@
           </a>
 
           <!-- Step 2 -->
-          <a href="KeteranganDemografi.html" class="step-item">
+          <a href="KeteranganDemografi.html" class="step-item" onclick="SurveyStore.save(collectIdentitasData())">
             <div class="step-left">
               <span class="step-number">2</span>
               <span>Keterangan Demografi</span>
@@ -59,7 +59,7 @@
           </a>
 
           <!-- Step 3 -->
-          <a href="Dokumentasi.html" class="step-item">
+          <a href="Dokumentasi.html" class="step-item" onclick="SurveyStore.save(collectIdentitasData())">
             <div class="step-left">
               <span class="step-number">3</span>
               <span>Dokumentasi</span>
@@ -68,7 +68,7 @@
           </a>
 
           <!-- Step 4 -->
-          <a href="Catatan.html" class="step-item">
+          <a href="Catatan.html" class="step-item" onclick="SurveyStore.save(collectIdentitasData())">
             <div class="step-left">
               <span class="step-number">4</span>
               <span>Catatan</span>
@@ -249,9 +249,35 @@
         return out;
       }
 
+      // Isi ulang field dari data yang sudah tersimpan (kalau user balik
+      // ke halaman ini setelah sebelumnya sudah mengisi & lanjut).
+      function hydrateIdentitasFields() {
+        const saved = SurveyStore.getAll();
+        identitasFieldIds.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el && saved[id]) el.value = saved[id];
+        });
+      }
+      hydrateIdentitasFields();
+
+      // Batasi NIK & No. KK cuma boleh angka, maks 16 digit, sambil diketik
+      ["nik_kepala_keluarga", "no_kk"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.setAttribute("inputmode", "numeric");
+          el.addEventListener("input", () => {
+            el.value = el.value.replace(/\D/g, "").slice(0, 16);
+          });
+        }
+      });
+
+      function isValid16Digit(value) {
+        return /^\d{16}$/.test(value);
+      }
+
       // Fungsi untuk Tombol Sebelumnya
       function handlePrev() {
-        // Kembali ke halaman sebelumnya
+        SurveyStore.save(collectIdentitasData());
         window.history.back();
       }
 
@@ -261,9 +287,38 @@
         alert("Draft berhasil disimpan!");
       }
 
+      const identitasFieldLabels = {
+        nama_kepala_keluarga: "Nama Kepala Keluarga",
+        nik_kepala_keluarga: "NIK Kepala Keluarga",
+        no_kk: "Nomor Kartu Keluarga (KK)",
+        provinsi: "Provinsi",
+        kabupaten_kota: "Kabupaten/Kota",
+        kecamatan: "Kecamatan",
+        kelurahan_desa: "Kelurahan/Desa",
+        rw: "RW",
+        rt: "RT",
+        alamat_lengkap: "Alamat Lengkap",
+        nama_informan: "Nama Informan",
+        nama_petugas: "Nama Petugas",
+      };
+
       // Fungsi untuk Tombol Selanjutnya
       function handleNext() {
-        SurveyStore.save(collectIdentitasData());
+        const data = collectIdentitasData();
+        const missingId = identitasFieldIds.find((id) => !data[id]);
+        if (missingId) {
+          alert(`Field "${identitasFieldLabels[missingId]}" wajib diisi.`);
+          return;
+        }
+        if (!isValid16Digit(data.nik_kepala_keluarga)) {
+          alert("NIK Kepala Keluarga harus tepat 16 digit angka.");
+          return;
+        }
+        if (!isValid16Digit(data.no_kk)) {
+          alert("Nomor Kartu Keluarga (KK) harus tepat 16 digit angka.");
+          return;
+        }
+        SurveyStore.save(data);
         window.location.href = "KeteranganDemografi.html";
       }
     </script>

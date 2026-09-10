@@ -19,7 +19,7 @@
   <body>
     <!-- NAVBAR TOP -->
     <nav class="navbar">
-      <a href="../../index.html" class="nav-back">
+      <a href="../../index.html" class="nav-back" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
         <i class="fa-solid fa-arrow-left"></i> Beranda
       </a>
       <div class="nav-logo">
@@ -45,7 +45,7 @@
 
         <div class="step-list">
           <!-- Step 1: Selesai -->
-          <a href="IdentitasKeluarga.html" class="step-item completed">
+          <a href="IdentitasKeluarga.html" class="step-item completed" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -55,7 +55,7 @@
           </a>
 
           <!-- Step 2: Selesai -->
-          <a href="KeteranganDemografi.html" class="step-item completed">
+          <a href="KeteranganDemografi.html" class="step-item completed" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -65,7 +65,7 @@
           </a>
 
           <!-- Step 3: Selesai -->
-          <a href="Dokumentasi.html" class="step-item completed">
+          <a href="Dokumentasi.html" class="step-item completed" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -168,6 +168,13 @@
       const inputCatatan = document.getElementById("inputCatatan");
       const charCounter = document.getElementById("charCounter");
 
+      // Isi ulang catatan dari data tersimpan (kalau user balik ke halaman ini)
+      const savedCatatan = SurveyStore.getAll().catatan;
+      if (savedCatatan) {
+        inputCatatan.value = savedCatatan;
+        charCounter.textContent = `${savedCatatan.length} / 1000`;
+      }
+
       // Feature: Live Character Counter
       inputCatatan.addEventListener("input", () => {
         const currentLength = inputCatatan.value.length;
@@ -182,13 +189,38 @@
 
       // Navigasi
       function handlePrev() {
-        window.location.href="Dokumentasi.html";
+        SurveyStore.save({ catatan: inputCatatan.value.trim() });
+        window.location.href = "Dokumentasi.html";
       }
 
       function handleSaveDraft() {
         SurveyStore.save({ catatan: inputCatatan.value.trim() });
         alert("Draft catatan berhasil disimpan!");
       }
+
+      // Field wajib per anggota (samakan dengan yang ditandai * di
+      // KeteranganDemografi.html), dipakai buat ngeblok submit kalau
+      // ada anggota yang belum lengkap.
+      const REQUIRED_MEMBER_FIELDS = [
+        "nama", "nik", "jenis_kelamin", "tanggal_lahir", "umur", "hubungan",
+        "partisipasi_sekolah", "pendidikan_tertinggi", "kelas_tertinggi", "ijazah_sttb",
+        "bekerja",
+      ];
+      // 4 field ini cuma wajib kalau bekerja = "Ya"
+      const REQUIRED_IF_WORKING_FIELDS = [
+        "lapangan_usaha", "deskripsi_pekerjaan", "status_pekerjaan_utama", "pendapatan_sebulan",
+      ];
+      function isMemberComplete(member) {
+        const baseOk = REQUIRED_MEMBER_FIELDS.every((k) => member[k]);
+        if (!baseOk) return false;
+        if (member.bekerja !== "Ya") return true;
+        return REQUIRED_IF_WORKING_FIELDS.every((k) => member[k]);
+      }
+
+      // Kalau submit gagal di tengah jalan (network error dll), lanjutin
+      // dari anggota yang belum berhasil pas diklik ulang -- jangan
+      // kirim ulang anggota yang sudah sukses (biar nggak dobel di sheet).
+      let nextMemberIndexToSubmit = 0;
 
       async function handleSubmit() {
         const submitBtn = document.querySelector(".btn-submit");
@@ -200,6 +232,21 @@
           return;
         }
 
+        const belumLengkap = members.find((m) => !isMemberComplete(m));
+        if (belumLengkap) {
+          alert(
+            `Anggota ke-${belumLengkap.indexNumber}${belumLengkap.nama ? " (" + belumLengkap.nama + ")" : ""} belum lengkap datanya. Lengkapi dulu di step Keterangan Demografi sebelum mengirim.`,
+          );
+          window.location.href = "KeteranganDemografi.html";
+          return;
+        }
+
+        if (SurveyStore.getPhotos().length === 0) {
+          alert('Field "301. Foto Ruang Tamu" belum diisi. Upload foto dulu di step Dokumentasi sebelum mengirim.');
+          window.location.href = "Dokumentasi.html";
+          return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirim...</span>';
 
@@ -208,8 +255,11 @@
           const photos = SurveyStore.getPhotos();
           const catatan = inputCatatan.value.trim();
 
-          // Satu baris di sheet "Individu_Anggota" per anggota keluarga
-          for (const member of members) {
+          // Satu baris di sheet "Individu_Anggota" per anggota keluarga.
+          // Kalau ini percobaan ulang setelah gagal, lanjut dari yang belum
+          // terkirim (nextMemberIndexToSubmit), bukan dari awal lagi.
+          for (let i = nextMemberIndexToSubmit; i < members.length; i++) {
+            const member = members[i];
             const payload = {
               pic_nama: pic.nama || "",
               pic_telp: pic.telp || "",
@@ -247,7 +297,7 @@
 
             // Foto cuma perlu diupload sekali (di baris anggota pertama),
             // baris berikutnya cukup ikut link yang sama tanpa upload ulang.
-            const isFirst = member === members[0];
+            const isFirst = i === 0;
             const result = await SurveyStore.submit(
               "Individu_Anggota",
               payload,
@@ -256,8 +306,10 @@
             if (!result || !result.success) {
               throw new Error((result && result.error) || "Gagal mengirim data anggota " + (member.nama || member.indexNumber));
             }
+            nextMemberIndexToSubmit = i + 1;
           }
 
+          nextMemberIndexToSubmit = 0;
           SurveyStore.clear();
           SurveyStore.clearPhotos();
           alert("Seluruh data survei berhasil dikirim!");
@@ -265,7 +317,8 @@
         } catch (err) {
           alert(
             "Gagal mengirim data: " + err.message +
-            "\n\nPastikan APPS_SCRIPT_URL di js/config.js sudah diisi URL Web App yang benar, dan koneksi internet aktif.",
+            "\n\nPastikan APPS_SCRIPT_URL di js/config.js sudah diisi URL Web App yang benar, dan koneksi internet aktif." +
+            (nextMemberIndexToSubmit > 0 ? `\n\n${nextMemberIndexToSubmit} anggota pertama sudah berhasil terkirim -- klik lagi untuk lanjut mengirim sisanya.` : ""),
           );
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> <span>Selesai & Kirim</span>';

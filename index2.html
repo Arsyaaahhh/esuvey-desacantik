@@ -76,6 +76,8 @@
     </div>
 
     <!-- Script Front-End Only -->
+    <script src="js/config.js"></script>
+    <script src="js/survey-store.js"></script>
     <script>
         // Gunakan variabel global untuk menentukan tujuan navigasi
         let destination = '';
@@ -88,18 +90,43 @@
             destination = 'pages/individu/IdentitasKeluarga.html';
         });
 
+        // Batasi No. Telepon: cuma boleh angka (boleh diawali tanda + di depan)
+        const phoneInput = document.querySelector('input[name="no_telp"]');
+        phoneInput.addEventListener('input', () => {
+            const hasPlus = phoneInput.value.startsWith('+');
+            const digits = phoneInput.value.replace(/\D/g, '');
+            phoneInput.value = (hasPlus ? '+' : '') + digits;
+        });
+
+        function isValidPhone(value) {
+            // Wajib angka, diawali 08 atau +62 / 62
+            return /^(\+62|62|0)8[0-9]{7,12}$/.test(value);
+        }
+
         document.getElementById('picForm').addEventListener('submit', function(e) {
             // Mencegah browser me-reload halaman
             e.preventDefault(); 
+
+            const phone = this.no_telp.value.trim();
+            if (!isValidPhone(phone)) {
+                alert('Nomor Telepon/WhatsApp harus berupa angka, diawali 08 atau +62.');
+                return;
+            }
             
             // 1. Ambil data dari form (Opsional jika ingin ditampilkan di halaman berikutnya)
             const formData = {
                 nama: this.nama_petugas.value,
-                telp: this.no_telp.value,
+                telp: phone,
                 email: this.email.value
             };
 
-            // 2. Simpan di Local Storage Browser (Opsional)
+            // 2. Setiap kali PIC form ini disubmit, itu artinya MULAI sesi
+            // pendataan baru (rumah tangga/anggota yang baru) -- jadi buang
+            // dulu sisa data survei dari sesi sebelumnya kalau ada yang
+            // ketinggalan (misal sesi lama ditinggal sebelum sempat kirim),
+            // supaya nggak ke-load bercampur ke sesi yang baru ini.
+            SurveyStore.clear();
+            SurveyStore.clearPhotos();
             localStorage.setItem('data_pic', JSON.stringify(formData));
 
             // Navigasi ke halaman yang dipilih

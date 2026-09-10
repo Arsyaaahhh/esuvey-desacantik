@@ -19,7 +19,7 @@
   <body>
     <!-- Top Navbar -->
     <header class="navbar">
-      <a href="../../index.html" class="nav-back">
+      <a href="../../index.html" class="nav-back" onclick="silentSaveOpenForm()">
         <i class="fa-solid fa-arrow-left"></i> Beranda
       </a>
       <div class="nav-logo">
@@ -41,7 +41,7 @@
         </div>
 
         <nav class="step-list">
-          <a href="IdentitasKeluarga.html" class="step-item completed">
+          <a href="IdentitasKeluarga.html" class="step-item completed" onclick="silentSaveOpenForm()">
             <div class="step-left">
               <span class="step-icon-done"
                 ><i class="fa-solid fa-check"></i
@@ -57,7 +57,7 @@
             </div>
           </a>
 
-          <a href="Dokumentasi.html" class="step-item">
+          <a href="Dokumentasi.html" class="step-item" onclick="silentSaveOpenForm()">
             <div class="step-left">
               <span class="step-number">3</span>
               <span>Dokumentasi</span>
@@ -65,7 +65,7 @@
             <i class="fa-regular fa-clock step-icon-wait"></i>
           </a>
 
-          <a href="Catatan.html" class="step-item">
+          <a href="Catatan.html" class="step-item" onclick="silentSaveOpenForm()">
             <div class="step-left">
               <span class="step-number">4</span>
               <span>Catatan</span>
@@ -251,6 +251,12 @@
                     <option value="MA">MA</option>
                     <option value="SMK">SMK</option>
                     <option value="SMLB">SMLB</option>
+                    <option value="Diploma I/II">Diploma I/II</option>
+                    <option value="Diploma III/Sarjana Muda">
+                      Diploma III/Sarjana Muda
+                    </option>
+                    <option value="Diploma IV/S1">Diploma IV/S1</option>
+                    <option value="S2/S3">S2/S3</option>
                   </select>
                 </div>
                 <div class="form-field">
@@ -275,6 +281,12 @@
                     <option value="10">10</option>
                     <option value="11">11</option>
                     <option value="12">12</option>
+                    <option value="13">13 (Perguruan Tinggi tahun ke-1)</option>
+                    <option value="14">14 (Perguruan Tinggi tahun ke-2)</option>
+                    <option value="15">15 (Perguruan Tinggi tahun ke-3)</option>
+                    <option value="16">16 (Perguruan Tinggi tahun ke-4)</option>
+                    <option value="17">17 (Perguruan Tinggi tahun ke-5)</option>
+                    <option value="18">18 (Perguruan Tinggi tahun ke-6)</option>
                   </select>
                 </div>
               </div>
@@ -304,6 +316,12 @@
                   <option value="MA">MA</option>
                   <option value="SMK">SMK</option>
                   <option value="SMLB">SMLB</option>
+                  <option value="Diploma I/II">Diploma I/II</option>
+                  <option value="Diploma III/Sarjana Muda">
+                    Diploma III/Sarjana Muda
+                  </option>
+                  <option value="Diploma IV/S1">Diploma IV/S1</option>
+                  <option value="S2/S3">S2/S3</option>
                 </select>
               </div>
 
@@ -322,6 +340,7 @@
                 </select>
               </div>
 
+              <div id="pekerjaanDetailFields">
               <div class="form-field">
                 <label
                   >211. Lapangan Usaha atau Bidang Pekerjaan Utama dari Tempat
@@ -367,10 +386,16 @@
                   <option value="Penyediaan akomodasi & makan minum">
                     Penyediaan akomodasi & makan minum
                   </option>
+                  <option value="Informasi dan komunikasi">
+                    Informasi dan komunikasi
+                  </option>
                   <option value="Keuangan & asuransi">
                     Keuangan & asuransi
                   </option>
                   <option value="Real estate">Real estate</option>
+                  <option value="Aktivitas profesional, ilmiah, dan teknis">
+                    Aktivitas profesional, ilmiah, dan teknis
+                  </option>
                   <option
                     value="Aktivitas penyewaan dan sewa guna, tanpa hak opsi, ketenagakerjaan, agen perjalanan, dan penunjang usaha lainnya"
                   >
@@ -384,6 +409,7 @@
                     Administrasi pemerintahan, pertahanan, dan jaminan sosial
                     wajib
                   </option>
+                  <option value="Pendidikan">Pendidikan</option>
                   <option
                     value="Aktivitas kesehatan manusia dan aktivitas sosial"
                   >
@@ -473,6 +499,7 @@
                   </option>
                   <option value="> 10.000.000">&gt; 10.000.000</option>
                 </select>
+              </div>
               </div>
 
               <!-- Button Simpan Form -->
@@ -567,6 +594,15 @@
       const inputNik = document.getElementById("inputNik");
       const inputHubungan = document.getElementById("inputHubungan");
 
+      // Batasi NIK anggota cuma boleh angka, maks 16 digit
+      inputNik.setAttribute("inputmode", "numeric");
+      inputNik.addEventListener("input", () => {
+        inputNik.value = inputNik.value.replace(/\D/g, "").slice(0, 16);
+      });
+      function isValid16Digit(value) {
+        return /^\d{16}$/.test(value);
+      }
+
       // Field-field lain di form anggota (id -> key data)
       const memberFieldMap = {
         inputJenisKelamin: "jenis_kelamin",
@@ -585,6 +621,40 @@
 
       function persistMembers() {
         SurveyStore.save({ members: membersData });
+      }
+
+      // Kalau form "Tambah/Edit Anggota" lagi kebuka tapi belum diklik
+      // "Simpan Anggota", simpan dulu apa adanya (tanpa validasi ketat)
+      // supaya isian nggak hilang kalau user pindah halaman.
+      function silentSaveOpenForm() {
+        if (stateForm.style.display !== "block") return;
+
+        const nama = inputNama.value.trim();
+        const nik = inputNik.value.trim();
+        if (!nama && !nik) return; // form kosong, nggak ada yang perlu disimpan
+
+        const hubungan = inputHubungan.value;
+        const extraFields = {};
+        Object.keys(memberFieldMap).forEach((elId) => {
+          const el = document.getElementById(elId);
+          extraFields[memberFieldMap[elId]] = el ? el.value.trim() : "";
+        });
+
+        const currentId = editingMemberId.value;
+        if (currentId !== "") {
+          const idx = membersData.findIndex((m) => m.id == currentId);
+          if (idx !== -1) {
+            membersData[idx] = { ...membersData[idx], nama, nik, hubungan, ...extraFields };
+          }
+        } else {
+          const newMember = {
+            id: Date.now(),
+            indexNumber: membersData.length + 1,
+            nama, nik, hubungan, ...extraFields,
+          };
+          membersData.push(newMember);
+        }
+        persistMembers();
       }
 
       // Fungsi Buka Form (Tambah Baru / Edit)
@@ -617,7 +687,46 @@
           formMemberTitle.textContent = `Anggota ke-${nextNumber}`;
           document.getElementById("memberForm").reset();
         }
+        togglePekerjaanDetailFields();
       }
+
+      // Daftar field wajib (bertanda *) di form anggota, dipakai untuk
+      // validasi simpan & untuk cek kelengkapan di badge daftar anggota.
+      const REQUIRED_MEMBER_FIELDS = [
+        { key: "nama", label: "Nama Anggota Keluarga" },
+        { key: "nik", label: "NIK Kepala Keluarga" },
+        { key: "jenis_kelamin", label: "Jenis Kelamin" },
+        { key: "tanggal_lahir", label: "Tanggal Lahir" },
+        { key: "umur", label: "Umur" },
+        { key: "hubungan", label: "Hubungan dengan Kepala Keluarga" },
+        { key: "partisipasi_sekolah", label: "Partisipasi Sekolah" },
+        { key: "pendidikan_tertinggi", label: "Pendidikan Tertinggi" },
+        { key: "kelas_tertinggi", label: "Kelas Tertinggi" },
+        { key: "ijazah_sttb", label: "Ijazah/STTB Tertinggi" },
+        { key: "bekerja", label: "Status Bekerja" },
+        // 4 field ini cuma wajib KALAU bekerja = "Ya" (lihat onlyIfWorking)
+        { key: "lapangan_usaha", label: "Lapangan Usaha", onlyIfWorking: true },
+        { key: "deskripsi_pekerjaan", label: "Deskripsi Pekerjaan", onlyIfWorking: true },
+        { key: "status_pekerjaan_utama", label: "Status dalam Pekerjaan Utama", onlyIfWorking: true },
+        { key: "pendapatan_sebulan", label: "Pendapatan Sebulan Terakhir", onlyIfWorking: true },
+      ];
+
+      function isMemberComplete(member) {
+        return REQUIRED_MEMBER_FIELDS.every((f) => {
+          if (f.onlyIfWorking && member.bekerja !== "Ya") return true;
+          return !!member[f.key];
+        });
+      }
+
+      // Tampilkan/sembunyikan field 211-214 sesuai jawaban 210 (Apakah Bekerja?)
+      function togglePekerjaanDetailFields() {
+        const bekerja = document.getElementById("inputPekerjaan").value;
+        document.getElementById("pekerjaanDetailFields").style.display =
+          bekerja === "Tidak" ? "none" : "block";
+      }
+      document
+        .getElementById("inputPekerjaan")
+        .addEventListener("change", togglePekerjaanDetailFields);
 
       // Fungsi Simpan Form
       function saveMemberForm() {
@@ -625,11 +734,26 @@
         const nik = inputNik.value.trim();
         const hubungan = inputHubungan.value;
 
+        if (!isValid16Digit(nik)) {
+          alert("NIK Anggota harus tepat 16 digit angka.");
+          return;
+        }
+
         const extraFields = {};
         Object.keys(memberFieldMap).forEach((elId) => {
           const el = document.getElementById(elId);
           extraFields[memberFieldMap[elId]] = el ? el.value.trim() : "";
         });
+
+        const candidate = { nama, nik, hubungan, ...extraFields };
+        const missing = REQUIRED_MEMBER_FIELDS.find((f) => {
+          if (f.onlyIfWorking && candidate.bekerja !== "Ya") return false;
+          return !candidate[f.key];
+        });
+        if (missing) {
+          alert(`Field "${missing.label}" wajib diisi.`);
+          return;
+        }
 
         const currentId = editingMemberId.value;
 
@@ -691,7 +815,7 @@
           // Render List Member
           memberListContainer.innerHTML = "";
           membersData.forEach((member) => {
-            const isLengkap = member.nama && member.hubungan && member.nik;
+            const isLengkap = isMemberComplete(member);
 
             const cardHtml = `
                         <div class="member-card-item" onclick="openMemberForm(${member.id})">
@@ -725,14 +849,21 @@
 
       // Navigasi Bawah
       function handlePrev() {
+        silentSaveOpenForm();
         window.history.back();
       }
       function handleSaveDraft() {
+        silentSaveOpenForm();
         persistMembers();
         alert("Draft berhasil disimpan!");
       }
       function handleNext() {
+        silentSaveOpenForm();
         persistMembers();
+        if (membersData.length === 0) {
+          alert("Tambahkan minimal 1 anggota keluarga dulu sebelum lanjut.");
+          return;
+        }
         window.location.href = "Dokumentasi.html";
       }
 

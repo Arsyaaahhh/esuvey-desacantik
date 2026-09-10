@@ -19,7 +19,7 @@
   <body>
     <!-- NAVBAR TOP -->
     <nav class="navbar">
-      <a href="../../index.html" class="nav-back">
+      <a href="../../index.html" class="nav-back" onclick="return goToStep(event, '../../index.html')">
         <i class="fa-solid fa-arrow-left"></i> Beranda
       </a>
       <div class="nav-logo">
@@ -45,7 +45,7 @@
 
         <div class="step-list">
           <!-- Step 1: Selesai -->
-          <a href="IdentitasKeluarga.html" class="step-item completed">
+          <a href="IdentitasKeluarga.html" class="step-item completed" onclick="return goToStep(event, 'IdentitasKeluarga.html')">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -55,7 +55,7 @@
           </a>
 
           <!-- Step 2: Selesai -->
-          <a href="KeteranganDemografi.html" class="step-item completed">
+          <a href="KeteranganDemografi.html" class="step-item completed" onclick="return goToStep(event, 'KeteranganDemografi.html')">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -73,7 +73,7 @@
           </a>
 
           <!-- Step 4: Menunggu -->
-          <a href="Catatan.html" class="step-item">
+          <a href="Catatan.html" class="step-item" onclick="return goToStep(event, 'Catatan.html')">
             <div class="step-left">
               <div class="step-number">4</div>
               <span>Catatan</span>
@@ -307,7 +307,8 @@
       }
 
       // 7. FUNGSI TOMBOL NAVIGASI BAWAH
-      function handlePrev() {
+      async function handlePrev() {
+        await compressAndStorePhotos();
         window.history.back();
       }
 
@@ -331,9 +332,44 @@
       }
 
       async function handleNext() {
+        if (uploadedFiles.length === 0 && SurveyStore.getPhotos().length === 0) {
+          alert('Field "301. Foto Ruang Tamu" wajib diisi. Upload minimal 1 foto dulu.');
+          return;
+        }
         await compressAndStorePhotos();
         window.location.href = "Catatan.html";
       }
+
+      // Dipakai link sidebar: pastikan foto sudah kekompres & tersimpan
+      // dulu sebelum benar-benar pindah halaman.
+      function goToStep(event, url) {
+        event.preventDefault();
+        compressAndStorePhotos().finally(() => {
+          window.location.href = url;
+        });
+        return false;
+      }
+
+      // Isi ulang preview foto dari data tersimpan (kalau user balik ke halaman ini)
+      async function hydratePhotos() {
+        const saved = SurveyStore.getPhotos();
+        if (!saved || saved.length === 0) return;
+        for (const p of saved) {
+          try {
+            const res = await fetch(p.base64);
+            const blob = await res.blob();
+            uploadedFiles.push(
+              new File([blob], p.filename || "foto.jpg", {
+                type: p.mimeType || "image/jpeg",
+              }),
+            );
+          } catch (e) {
+            // Lewati foto yang gagal dipulihkan
+          }
+        }
+        renderPreviews();
+      }
+      hydratePhotos();
     </script>
   </body>
 </html>
