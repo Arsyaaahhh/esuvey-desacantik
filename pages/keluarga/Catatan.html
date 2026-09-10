@@ -19,7 +19,7 @@
   <body>
     <!-- NAVBAR TOP -->
     <nav class="navbar">
-      <a href="../../index.html" class="nav-back">
+      <a href="../../index.html" class="nav-back" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
         <i class="fa-solid fa-arrow-left"></i> Beranda
       </a>
       <div class="nav-logo">
@@ -45,7 +45,7 @@
 
         <div class="step-list">
           <!-- Step 1: Selesai -->
-          <a href="IdentitasKeluarga.html" class="step-item completed">
+          <a href="IdentitasKeluarga.html" class="step-item completed" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -58,6 +58,7 @@
           <a
             href="KeteranganPerumahan.html"
             class="step-item completed"
+            onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})"
           >
             <div class="step-left">
               <div class="step-icon-done">
@@ -68,7 +69,7 @@
           </a>
 
           <!-- Step 3: Selesai -->
-          <a href="Dokumentasi.html" class="step-item completed">
+          <a href="Dokumentasi.html" class="step-item completed" onclick="SurveyStore.save({catatan: inputCatatan.value.trim()})">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -171,6 +172,13 @@
       const inputCatatan = document.getElementById("inputCatatan");
       const charCounter = document.getElementById("charCounter");
 
+      // Isi ulang catatan dari data tersimpan (kalau user balik ke halaman ini)
+      const savedCatatan = SurveyStore.getAll().catatan;
+      if (savedCatatan) {
+        inputCatatan.value = savedCatatan;
+        charCounter.textContent = `${savedCatatan.length} / 1000`;
+      }
+
       // Feature: Live Character Counter
       inputCatatan.addEventListener("input", () => {
         const currentLength = inputCatatan.value.length;
@@ -185,6 +193,7 @@
 
       // Navigasi
       function handlePrev() {
+        SurveyStore.save({ catatan: inputCatatan.value.trim() });
         window.history.back();
       }
 
@@ -193,14 +202,60 @@
         alert("Draft catatan berhasil disimpan!");
       }
 
+      const RT_REQUIRED_FIELDS = {
+        nama_kepala_keluarga: "Nama Kepala Keluarga",
+        nik_kepala_keluarga: "NIK Kepala Keluarga",
+        no_kk: "Nomor Kartu Keluarga (KK)",
+        provinsi: "Provinsi",
+        kabupaten_kota: "Kabupaten/Kota",
+        kecamatan: "Kecamatan",
+        kelurahan_desa: "Kelurahan/Desa",
+        rw: "RW",
+        rt: "RT",
+        alamat_lengkap: "Alamat Lengkap",
+        nama_informan: "Nama Informan",
+        nama_petugas: "Nama Petugas",
+        q201_status_kepemilikan_bangunan: "201. Status kepemilikan bangunan",
+        q202_status_kepemilikan_lahan: "202. Status kepemilikan lahan",
+        q203_luas_lantai_m2: "203. Luas lantai",
+        q204_jenis_lantai: "204. Jenis lantai terluas",
+        q205_jenis_dinding: "205. Jenis dinding terluas",
+        q206_jenis_atap: "206. Jenis atap terluas",
+        q207_sumber_air_minum: "207. Sumber air minum utama",
+        q208_fasilitas_bab: "208. Fasilitas tempat buang air besar",
+        q210_pembuangan_akhir_tinja: "210. Tempat pembuangan akhir tinja",
+      };
+
       async function handleSubmit() {
         const submitBtn = document.querySelector(".btn-submit");
+        const survey = SurveyStore.getAll();
+
+        if (SurveyStore.getPhotos().length === 0) {
+          alert('Field "301. Foto Ruang Tamu" belum diisi. Upload foto dulu di step Dokumentasi sebelum mengirim.');
+          window.location.href = "Dokumentasi.html";
+          return;
+        }
+
+        for (const key in RT_REQUIRED_FIELDS) {
+          if (!survey[key]) {
+            alert(
+              `Field "${RT_REQUIRED_FIELDS[key]}" belum diisi. Lengkapi dulu di step Identitas Keluarga / Keterangan Perumahan sebelum mengirim.`,
+            );
+            window.location.href = "IdentitasKeluarga.html";
+            return;
+          }
+        }
+        if (["1", "2", "3"].includes(survey.q208_fasilitas_bab) && !survey.q209_jenis_kloset) {
+          alert('Field "209. Jenis kloset" wajib diisi karena jawaban 208 kode 1, 2, atau 3.');
+          window.location.href = "KeteranganPerumahan.html";
+          return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirim...</span>';
 
         try {
           const pic = SurveyStore.getPic();
-          const survey = SurveyStore.getAll();
           const photos = SurveyStore.getPhotos();
 
           const payload = {

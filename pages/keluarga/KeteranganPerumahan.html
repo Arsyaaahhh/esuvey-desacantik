@@ -19,7 +19,7 @@
   <body>
     <!-- NAVBAR TOP -->
     <nav class="navbar">
-      <a href="#" class="nav-back">
+      <a href="../../index.html" class="nav-back" onclick="SurveyStore.save(collectPerumahanData())">
         <i class="fa-solid fa-arrow-left"></i> Beranda
       </a>
       <div class="nav-logo">
@@ -45,7 +45,7 @@
 
         <div class="step-list">
           <!-- Step 1: Selesai -->
-          <a href="IdentitasKeluarga.html" class="step-item completed">
+          <a href="IdentitasKeluarga.html" class="step-item completed" onclick="SurveyStore.save(collectPerumahanData())">
             <div class="step-left">
               <div class="step-icon-done">
                 <i class="fa-solid fa-check"></i>
@@ -63,7 +63,7 @@
           </a>
 
           <!-- Step 3: Menunggu -->
-          <a href="Dokumentasi.html" class="step-item">
+          <a href="Dokumentasi.html" class="step-item" onclick="SurveyStore.save(collectPerumahanData())">
             <div class="step-left">
               <div class="step-number">4</div>
               <span>Dokumentasi</span>
@@ -72,7 +72,7 @@
           </a>
 
           <!-- Step 4: Menunggu -->
-          <a href="Catatan.html" class="step-item">
+          <a href="Catatan.html" class="step-item" onclick="SurveyStore.save(collectPerumahanData())">
             <div class="step-left">
               <div class="step-number">5</div>
               <span>Catatan</span>
@@ -486,7 +486,69 @@
       }
 
       function handlePrev() {
+        SurveyStore.save(collectPerumahanData());
         window.history.back();
+      }
+
+      // Isi ulang field dari data yang sudah tersimpan
+      function hydratePerumahanFields() {
+        const saved = SurveyStore.getAll();
+        const map = {
+          q201: "q201_status_kepemilikan_bangunan",
+          q202: "q202_status_kepemilikan_lahan",
+          q203: "q203_luas_lantai_m2",
+          q204: "q204_jenis_lantai",
+          q205: "q205_jenis_dinding",
+          q206: "q206_jenis_atap",
+          q207: "q207_sumber_air_minum",
+          q208: "q208_fasilitas_bab",
+          q209: "q209_jenis_kloset",
+          q210: "q210_pembuangan_akhir_tinja",
+          art1_nama: "art1_nama",
+          art1_deskripsi: "art1_deskripsi_pekerjaan",
+          art1_penghasilan: "art1_penghasilan",
+          art2_nama: "art2_nama",
+          art2_deskripsi: "art2_deskripsi_pekerjaan",
+          art2_penghasilan: "art2_penghasilan",
+          art3_nama: "art3_nama",
+          art3_deskripsi: "art3_deskripsi_pekerjaan",
+          art3_penghasilan: "art3_penghasilan",
+        };
+        Object.keys(map).forEach((elId) => {
+          const el = document.getElementById(elId);
+          if (el && saved[map[elId]]) el.value = saved[map[elId]];
+        });
+      }
+      hydratePerumahanFields();
+
+      const perumahanRequiredIds = {
+        q201: "201. Status kepemilikan bangunan",
+        q202: "202. Status kepemilikan lahan",
+        q203: "203. Luas lantai",
+        q204: "204. Jenis lantai terluas",
+        q205: "205. Jenis dinding terluas",
+        q206: "206. Jenis atap terluas",
+        q207: "207. Sumber air minum utama",
+        q208: "208. Fasilitas tempat buang air besar",
+        q210: "210. Tempat pembuangan akhir tinja",
+      };
+
+      function validatePerumahan() {
+        for (const id in perumahanRequiredIds) {
+          const el = document.getElementById(id);
+          if (!el || !el.value) {
+            alert(`Field "${perumahanRequiredIds[id]}" wajib diisi.`);
+            return false;
+          }
+        }
+        // 209 cuma wajib kalau 208 berkode 1, 2, atau 3
+        const q208 = document.getElementById("q208").value;
+        const q209 = document.getElementById("q209").value;
+        if (["1", "2", "3"].includes(q208) && !q209) {
+          alert('Field "209. Jenis kloset" wajib diisi karena jawaban 208 kode 1, 2, atau 3.');
+          return false;
+        }
+        return true;
       }
 
       function handleSaveDraft() {
@@ -495,6 +557,7 @@
       }
 
       function handleNext() {
+        if (!validatePerumahan()) return;
         SurveyStore.save(collectPerumahanData());
         window.location.href = "Dokumentasi.html";
       }
