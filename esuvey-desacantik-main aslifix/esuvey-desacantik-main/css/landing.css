@@ -1,0 +1,143 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Mengubah background menjadi abu-abu sangat terang mirip referensi aplikasi */
+    background: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #1f2937;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Header & Logo */
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.header img {
+    width: 48px;
+    height: 48px;
+}
+
+.header-text {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+/* Form Card */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    /* Shadow sedikit diperhalus agar tidak terlalu tebal */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 32px;
+}
+
+.card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group.submit-group {
+    margin-top: 24px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.text-danger {
+    color: #ef4444;
+}
+
+/* Input dengan Icon di dalamnya */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    transition: color 0.2s ease;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 10px 12px 10px 40px; 
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-wrapper input::placeholder {
+    color: #9ca3af;
+}
+
+/* Mengubah warna border dan icon menjadi ungu saat input diklik/aktif */
+.input-wrapper input:focus {
+    border-color: #5b3cc4;
+    box-shadow: 0 0 0 1px #5b3cc4;
+}
+
+.input-wrapper:focus-within i {
+    color: #5b3cc4;
+}
+
+/* Tombol Submit - Diubah ke warna ungu referensi */
+.btn-submit {
+    width: 100%;
+    background-color: #5b3cc4; /* Warna ungu utama dari gambar */
+    color: #ffffff;
+    font-weight: 600;
+    padding: 14px; /* Sedikit diperlebar agar mirip tombol di gambar */
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+    background-color: #4a2ba6; /* Warna ungu lebih gelap saat kursor diarahkan (hover) */
+}
+
+.btn-submit:active {
+    transform: scale(0.98); /* Efek klik (tombol sedikit mengecil) */
+}

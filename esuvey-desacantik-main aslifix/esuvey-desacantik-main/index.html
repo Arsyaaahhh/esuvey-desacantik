@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA</title>
+
+    <!-- Memanggil file CSS eksternal -->
+    <link rel="stylesheet" href="css/index.css">
+    
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header / Logo BPS -->
+        <div class="header">
+            <img src="images/logo-bps.webp" alt="Logo BPS" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/28/Lambang_Badan_Pusat_Statistik_%28BPS%29_Indonesia.svg'">
+            <div class="header-text">
+                Badan Pusat Statistik<br>
+                Kota Surabaya
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card">
+            <h2>GROUND CHECK PENDATAAN DESA CINTA STATISTIK (CANTIK) KOTA SURABAYA</h2>
+            <p>Pilih menu di bawah ini untuk melanjutkan ke menu yang diinginkan.</p>
+
+            <form id="picForm">
+
+                <!-- Group Tombol Navigasi -->
+                <div class="button-group">
+                    <button type="submit" id="btnSaranaPrasarana" class="btn-submit">
+                        Sarana dan Prasarana
+                    </button>
+                    <button type="submit" id="btnGroundCheck" class="btn-submit">
+                        Ground Check Desa Cantik
+                    </button>
+                    <button type="submit" id="btnDaftarList" class="btn-submit">
+                        Daftar List
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Front-End Only -->
+    <script>
+        let destination = '';
+
+        document.getElementById('btnSaranaPrasarana').addEventListener('click', function() {
+            destination = '#';
+        });
+
+        document.getElementById('btnGroundCheck').addEventListener('click', function() {
+            destination = 'index2.html';
+        });
+
+        document.getElementById('btnDaftarList').addEventListener('click', function() {
+            destination = '#';
+        });
+
+        document.getElementById('picForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            // Default jika disubmit dengan Enter
+            if (!destination) {
+                destination = '#';
+            }
+
+            // Navigasi ke halaman tujuan
+            if (destination) {
+                window.location.href = destination;
+            }
+        });
+    </script>
+</body>
+</html>
